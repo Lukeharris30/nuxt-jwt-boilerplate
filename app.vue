@@ -3,8 +3,8 @@ const runtimeConfig = useRuntimeConfig()
 
 const appConfig = useAppConfig()
 
-const $q = useQuasar()
-$q.dark.set(true)
+// const $q = useQuasar()
+// $q.dark.set(true)
 
 </script>
 <template>

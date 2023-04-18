@@ -17,18 +17,18 @@ function toggleRightDrawer () {
 <template>
     <q-layout view="hHh lpR fFf">
   
-      <q-header elevated class="bg-dark text-white" height-hint="98">
+      <q-header  class="bg-dark text-white" height-hint="98">
         <q-toolbar>
-          <q-btn dense flat round icon="menu" @click="toggleLeftDrawer" />
+          <q-btn dense flat  icon="menu" @click="toggleLeftDrawer" />
   
           <q-toolbar-title>
             <q-avatar>
               <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
             </q-avatar>
-            Portal
+           Supplier Portal
           </q-toolbar-title>
   
-          <q-btn dense flat round icon="menu" @click="toggleRightDrawer" />
+          <q-btn dense flat  icon="menu" @click="toggleRightDrawer" />
         </q-toolbar>
   
         <q-tabs align="left">
@@ -57,13 +57,13 @@ function toggleRightDrawer () {
         
       </q-page-container>
   
-      <q-footer elevated class="bg-grey-8 text-white">
+      <q-footer class="q-dark text-white">
         <q-toolbar>
           <q-toolbar-title>
             <q-avatar>
               <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
             </q-avatar>
-            <div>Portal</div>
+            <div>Supplier Portal</div>
           </q-toolbar-title>
         </q-toolbar>
       </q-footer>
