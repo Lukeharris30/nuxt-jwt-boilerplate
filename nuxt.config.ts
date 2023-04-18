@@ -14,16 +14,30 @@ export default defineNuxtConfig({
   },
   quasar: {
     extras: {
-      fontIcons: ['material-icons']
+      fontIcons: ['material-icons'],
+    },
+    plugins: [
+      "Notify"
+    ], 
+    config: {
+      brand: {
+        primary:'#e51937',
+        
+      }
     }
+   
+
+   
   },
   css:
     [
       // '@quasar/extras/roboto-font/roboto-font.css',
       // '@quasar/extras/material-icons/material-icons.css',
       // '@quasar/extras/fontawesome-v6/fontawesome-v6.css',
-      '@quasar/extras/line-awesome/line-awesome.css'
+      '@quasar/extras/line-awesome/line-awesome.css',
       // '~/assets/styles/quasar.sass',
+  
+    'quasar/brand' 
     ],
   
 
