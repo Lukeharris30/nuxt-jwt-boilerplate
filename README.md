@@ -2,6 +2,12 @@
 
 Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
 
+Using [Quasar](https://quasar.dev/) for the UI, via [Module for Nuxt](https://nuxt.com/modules/quasar#regarding-component-icons).
+
+Using [VueUse](https://vueuse.org/nuxt/README.html) for utilies. 
+
+See a great boilerplate example using [nuxt and quasar](https://github.com/piscis/nuxt-quasar-boilerplate/blob/main/nuxt.config.ts).
+
 ## Setup
 
 Make sure to install the dependencies:

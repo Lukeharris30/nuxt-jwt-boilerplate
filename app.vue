@@ -2,13 +2,16 @@
 const runtimeConfig = useRuntimeConfig()
 
 const appConfig = useAppConfig()
+
+const $q = useQuasar()
+$q.dark.set(true)
 </script>
 <template>
   <NuxtPage />
   <div>
-    <h2>runtime config</h2>
+    <h2>App config</h2>
     <pre>{{ appConfig }} </pre> 
-    <h2>app config </h2>
+   
   </div>
  
 </template>

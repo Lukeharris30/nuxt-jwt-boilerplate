@@ -1,7 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
   modules: [
-    'nuxt-quasar-ui'
+    'nuxt-quasar-ui',
+    '@vueuse/nuxt',
   ],
   runtimeConfig: {
     // The private keys which are only available server-side
