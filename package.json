@@ -1,0 +1,24 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "engines" : { 
+    "npm" : ">=8.0.0 <9.0.0",
+    "node" : ">=16.0.0 <17.0.0"
+  },
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare"
+  },
+  "devDependencies": {
+    "@types/node": "^18",
+    "nuxt": "^3.4.1",
+    "nuxt-quasar-ui": "^1.6.1"
+  },
+  "dependencies": {
+    "@quasar/extras": "^1.16.2",
+    "quasar": "^2.11.10"
+  }
+}
