@@ -1,7 +1,7 @@
 <script  setup>
 import jwt_decode from "jwt-decode";
 
-
+const user = ref('')
 
 const runtimeConfig = useRuntimeConfig()
 
@@ -23,14 +23,20 @@ function handleCredentialResponse(response) {
   const token = response.credential
 const decoded = jwt_decode(token)
   console.log(decoded)
+  user.value = {
+    name: decoded.name,
+    imageUrl: decoded.picture,
+    isAuthenticated: decoded.email_verified
+  }
   // call your backend API here
   // the token can be accessed as: response.credential
 }
 </script>
 <template>
+  <pre>{{ user }}</pre>
     <div>
       <h1>Login</h1>
-      <div id="googleButton"></div>
+      <div v-if="!user" id="googleButton"></div>
      
 <!-- 
       <AppAlert>
