@@ -19,7 +19,7 @@ function toggleRightDrawer () {
   
       <q-header  class="bg-dark text-white" height-hint="98">
         <q-toolbar>
-          <q-btn dense flat  icon="menu" @click="toggleLeftDrawer" />
+          <!-- <q-btn dense flat  icon="menu" @click="toggleLeftDrawer" /> -->
   
           <q-toolbar-title>
             <q-avatar>
@@ -28,13 +28,13 @@ function toggleRightDrawer () {
            Supplier Portal
           </q-toolbar-title>
   
-          <q-btn dense flat  icon="menu" @click="toggleRightDrawer" />
-        </q-toolbar>
+          <!-- <q-btn dense flat  icon="menu" @click="toggleRightDrawer" /> -->
+        </q-toolbar> 
   
         <q-tabs align="left">
           
           <q-route-tab to="/" label="home" />
-          <q-route-tab to="/about" label="about" />
+          <q-route-tab to="/upload" label="upload" />
           <q-route-tab to="/login" label="login" />
         </q-tabs>
       </q-header>
