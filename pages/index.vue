@@ -1,5 +1,4 @@
 <script  setup>
-import jwt_decode from "jwt-decode";
 
 const user = ref('')
 
@@ -19,20 +18,19 @@ onMounted(() => {
   
 })
 
-function handleCredentialResponse(response) {
+async function handleCredentialResponse(response) {
   const token = response.credential
-const decoded = jwt_decode(token)
-  console.log(decoded)
-  user.value = {
-    name: decoded.name,
-    imageUrl: decoded.picture,
-    isAuthenticated: decoded.email_verified
-  }
+  const { data } = await await useFetch('/api/getUserAuth', {
+        method: 'POST',
+        body: token
+    })
+
+  user.value = data
   // call your backend API here
   // the token can be accessed as: response.credential
 }
 
-await $fetch('/api/getUserAuth')
+
 </script>
 <template>
   <pre>{{ user }}</pre>
