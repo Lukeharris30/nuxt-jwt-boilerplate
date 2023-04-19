@@ -33,9 +33,9 @@ function toggleRightDrawer () {
   
         <q-tabs align="left">
           
-          <q-route-tab to="/" label="home" />
+          <q-route-tab to="/home" label="home" />
           <q-route-tab to="/upload" label="upload" />
-          <q-route-tab to="/login" label="login" />
+          <q-route-tab to="/" label="login" />
         </q-tabs>
       </q-header>
   
