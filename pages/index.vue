@@ -31,6 +31,8 @@ const decoded = jwt_decode(token)
   // call your backend API here
   // the token can be accessed as: response.credential
 }
+
+await $fetch('/api/getUserAuth')
 </script>
 <template>
   <pre>{{ user }}</pre>
