@@ -4,19 +4,31 @@ const runtimeConfig = useRuntimeConfig()
 const dropZoneRef = ref('')
 
 const filesData = ref([])
+const { open, reset, files, onChange } = useFileDialog()
 
 function onDrop(files) {
   console.log('dropped', files)
   filesData.value = files
 }
 
+
 const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
+
+const filesToUpload = computed(() => files.value ? files.value : filesData.value
+
+) 
+
+function removeFile() {
+  console.log('removing')
+  reset()
+  filesData.value = []
+} 
 </script>
 
 <template>
   <h1>About</h1>
   <section>
-    
+
     <h2>Upload a File</h2>
     <div ref="dropZoneRef" class="drop-zone flex-center flex">
       <div class="flex-center flex column">
@@ -24,24 +36,30 @@ const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
         <div class="">Drop Files</div>
       </div>
     </div>
+    <q-btn v-if="filesToUpload.length === 0" icon-right="upload" @click="open()">Add Files</q-btn>
+
     <div class="q-pa-md" style="max-width: 350px">
-    <q-list bordered v-if="filesData.length > 0">
-      
-      <q-item clickable v-ripple  v-for="(file, index ) in filesData">
-        <q-item-section avatar>
-          <QIcon name="upload_file"></QIcon>
-        </q-item-section>
-        <q-item-section>{{file.name }}</q-item-section>
-        <q-item-section side top>
-          <q-item-label caption>{{ file.type }}</q-item-label>
-        </q-item-section>
-      </q-item>
-    
+      <q-list bordered v-if="filesToUpload.length > 0">
+        <q-item  v-ripple v-for="(file, index ) in filesToUpload">
+          <q-item-section avatar>
+            <QIcon name="upload_file"></QIcon>
+          </q-item-section>
+          <q-item-section>
+            <q-item-label top>{{ file.name }}</q-item-label>
+            <q-item-label bottom class="text-grey-8">{{ file.type }}</q-item-label>
+          </q-item-section>
+          <!-- <q-item-section side top>
+            <q-btn flat dense icon="delete" @click="removeFile(file)"></q-btn>
+          </q-item-section> -->
+        </q-item>
       </q-list>
     </div>
-    <q-btn v-if="isOverDropZone || filesData.length > 0" color="primary" label="Primary" />
 
-    
+    <q-btn v-if="isOverDropZone || filesData.length > 0 || files" color="primary" label="Upload" icon-right="done" />
+      <q-btn v-if="isOverDropZone || filesData.length > 0 || files" label="Delete" icon-right="close" @click="removeFile()" />
+
+
+
 
   </section>
   <section>
@@ -58,7 +76,7 @@ const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
           <QIcon name="thumb_up" size="xs"></QIcon>
           <QIcon name="menu" size="sm"></QIcon>
           <QIcon name="close" size="md"></QIcon>
-          <QIcon name="folder" size="lg"></QIcon>
+          <QIcon name="folder" size="xl"></QIcon>
           <QIcon name="folder_open" size="xl"></QIcon>
           <QIcon name="attach_file"></QIcon>
           <QIcon name="upload_file"></QIcon>
@@ -76,8 +94,8 @@ const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
 
         </q-card-section>
       </q-card>
-      
-    
+
+
 
     </div>
 
