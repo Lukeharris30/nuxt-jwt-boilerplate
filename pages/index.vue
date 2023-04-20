@@ -16,7 +16,7 @@ onMounted(() => {
     // google.accounts.id.prompt(); // also display the One Tap dialog
 })
 
-async function handleCredentialResponse(response: Http2Server) {
+async function handleCredentialResponse(response) {
   const token = response.credential
   const { data } = await await useFetch('/api/getUserAuth', {
         method: 'POST',
