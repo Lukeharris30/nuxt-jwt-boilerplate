@@ -25,18 +25,16 @@ const  u  = useUser()
            
         <q-item v-if="u.user"  >
           <q-item-section side>
-            <q-avatar square size="50px">
+            <q-avatar square size="40px">
               <img :src="u.user.imageUrl" />
-              <q-badge floating color="primary">srammie</q-badge>
             </q-avatar>
           </q-item-section>
           
           <q-item-section>
             <q-item-label>{{u.user.name}}</q-item-label>
+            <q-badge v-if="u.user.isAdmin"  color="primary">srammie</q-badge>
           </q-item-section>
-          <!-- <q-item-section >
-            <q-badge   color="primary">srammie</q-badge>
-          </q-item-section> -->
+          
 
         </q-item>
         </q-toolbar> 

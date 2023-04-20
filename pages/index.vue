@@ -16,7 +16,7 @@ onMounted(() => {
 
 async function handleCredentialResponse(response) {
   const token = response.credential
-  const { data } = await await useFetch('/api/getUserAuth', {
+  const { data } = await useFetch('/api/getUserAuth', {
         method: 'POST',
         body: token
     })
