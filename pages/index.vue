@@ -1,7 +1,6 @@
 <script  setup>
-import { Http2Server } from 'http2';
-import {useCounter} from '../stores/counter.js'
-const user = ref('')
+import {useUser} from '../stores/user.js'
+const identity = useUser()
 const runtimeConfig = useRuntimeConfig()
 
 onMounted(() => {
@@ -13,7 +12,6 @@ onMounted(() => {
       document.getElementById("googleButton"),
       { theme: "outline", size: "large" } // customization attributes
     );
-    // google.accounts.id.prompt(); // also display the One Tap dialog
 })
 
 async function handleCredentialResponse(response) {
@@ -22,24 +20,16 @@ async function handleCredentialResponse(response) {
         method: 'POST',
         body: token
     })
-  user.value = data
-  // call your backend API here
-  // the token can be accessed as: response.credential
+  identity.setGoogleUser(data)
 }
 
-const counter = useCounter()
 
 
 </script>
 <template>
-  <div>
-    <button @click="counter.increment()">increment</button>
-    {{ counter.n }}
-  </div>
-  <pre>{{ user }}</pre>
     <div>
       <h1>Login</h1>
-      <div v-if="!user" id="googleButton"></div>
+      <div v-if="!identity.user" id="googleButton"></div>
      
     </div>
-  </template>
+</template>

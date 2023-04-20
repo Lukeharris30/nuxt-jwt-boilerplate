@@ -1,19 +1,9 @@
   
 <script setup>
-import {useCounter} from '../stores/counter.js'
+import { useUser } from '../stores/user.js'
 
-const counter = useCounter()
+const  u  = useUser()
 
-const leftDrawerOpen = ref(false)
-const rightDrawerOpen = ref(false)
-  
-function toggleLeftDrawer () {
-    leftDrawerOpen.value = !leftDrawerOpen.value
-}
-
-function toggleRightDrawer () {
-    rightDrawerOpen.value = !rightDrawerOpen.value
-}
 
 </script>
 
@@ -21,17 +11,34 @@ function toggleRightDrawer () {
     <q-layout view="hHh lpR fFf">
   
       <q-header  class="bg-dark text-white" height-hint="98">
-        <q-toolbar>
+        <q-toolbar class="q-pt-lg">
           <!-- <q-btn dense flat  icon="menu" @click="toggleLeftDrawer" /> -->
   
           <q-toolbar-title>
             <q-avatar>
               <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
             </q-avatar>
-           Supplier Portal {{ counter.n }}
+           Supplier Portal
           </q-toolbar-title>
   
           <!-- <q-btn dense flat  icon="menu" @click="toggleRightDrawer" /> -->
+           
+        <q-item v-if="u.user"  >
+          <q-item-section side>
+            <q-avatar square size="50px">
+              <img :src="u.user.imageUrl" />
+              <q-badge floating color="primary">srammie</q-badge>
+            </q-avatar>
+          </q-item-section>
+          
+          <q-item-section>
+            <q-item-label>{{u.user.name}}</q-item-label>
+          </q-item-section>
+          <!-- <q-item-section >
+            <q-badge   color="primary">srammie</q-badge>
+          </q-item-section> -->
+
+        </q-item>
         </q-toolbar> 
   
         <q-tabs align="left">
@@ -40,17 +47,9 @@ function toggleRightDrawer () {
           <q-route-tab to="/upload" label="upload" />
           <q-route-tab to="/" label="login" />
         </q-tabs>
+       
+        
       </q-header>
-  
-      <q-drawer v-model="leftDrawerOpen" side="left" bordered>
-        <!-- drawer content -->
-        <h2>On the Left</h2>
-      </q-drawer>
-  
-      <q-drawer v-model="rightDrawerOpen" side="right" bordered>
-        <!-- drawer content -->
-        <h2>On the Right</h2>
-      </q-drawer>
   
       <q-page-container>
         <!-- <router-view /> -->
