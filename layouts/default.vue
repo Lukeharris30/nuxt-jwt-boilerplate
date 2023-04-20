@@ -1,5 +1,8 @@
   
 <script setup>
+import {useCounter} from '../stores/counter.js'
+
+const counter = useCounter()
 
 const leftDrawerOpen = ref(false)
 const rightDrawerOpen = ref(false)
@@ -25,7 +28,7 @@ function toggleRightDrawer () {
             <q-avatar>
               <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
             </q-avatar>
-           Supplier Portal
+           Supplier Portal {{ counter.n }}
           </q-toolbar-title>
   
           <!-- <q-btn dense flat  icon="menu" @click="toggleRightDrawer" /> -->
