@@ -4,12 +4,23 @@ export default defineNuxtConfig({
     'nuxt-quasar-ui',
     '@vueuse/nuxt',
   ],
+  app: {
+    head: {
+      script: [
+        {
+          src: 'https://accounts.google.com/gsi/client',
+        },
+      ],
+    }
+  },
   runtimeConfig: {
     // The private keys which are only available server-side
     apiSecret: '123',
     // Keys within public are also exposed client-side
     public: {
-      apiBase: '/api'
+      apiBase: '/api',
+      googleSecret: '718979222890-mumo8keibd36f1a4mko4odk0590am8ds.apps.googleusercontent.com',
+
     }
   },
   quasar: {
@@ -22,7 +33,7 @@ export default defineNuxtConfig({
     config: {
       brand: {
         primary:'#e51937',
-        
+
       }
     }
    
