@@ -3,8 +3,12 @@ export default defineNuxtConfig({
   modules: [
     'nuxt-quasar-ui',
     '@vueuse/nuxt',
+    '@pinia/nuxt',
   ],
+  // for pinia vite error
+  ssr: false,
   app: {
+
     head: {
       script: [
         {
@@ -36,9 +40,9 @@ export default defineNuxtConfig({
 
       }
     }
-   
-
-   
+  },
+  pinia: {
+    autoImports:['defineStore', ['defineStore', 'acceptHMRUpdate']],
   },
   css:
     [
