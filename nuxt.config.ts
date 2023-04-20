@@ -19,7 +19,7 @@ export default defineNuxtConfig({
     // Keys within public are also exposed client-side
     public: {
       apiBase: '/api',
-      googleSecret: '718979222890-mumo8keibd36f1a4mko4odk0590am8ds.apps.googleusercontent.com',
+      googleSecret: process.env.NUXT_GOOGLE_SECRET,
 
     }
   },
