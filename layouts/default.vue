@@ -39,7 +39,7 @@ const u = useUser()
       </q-page>
     </q-page-container>
 
-    <q-footer class="q-dark text-white">
+    <q-footer class="q-dark text-white q-pt-lg q-pb-lg">
       <q-toolbar>
         <q-toolbar-title>
           <q-avatar>
