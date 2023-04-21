@@ -6,21 +6,16 @@ Using [Quasar](https://quasar.dev/) for the UI, via [Module for Nuxt](https://nu
 
 Using [VueUse](https://vueuse.org/nuxt/README.html) for utilies. 
 
-See a great boilerplate example using [nuxt and quasar](https://github.com/piscis/nuxt-quasar-boilerplate/blob/main/nuxt.config.ts).
 
 ## Setup
 
 Make sure to install the dependencies:
 
 ```bash
-# yarn
-yarn install
 
 # npm
 npm install
 
-# pnpm
-pnpm install
 ```
 
 ## Development Server
