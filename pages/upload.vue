@@ -1,6 +1,10 @@
 <script setup>
 const runtimeConfig = useRuntimeConfig()
 
+definePageMeta({
+  middleware: 'auth'
+})
+
 const dropZoneRef = ref('')
 
 const filesData = ref([])
