@@ -15,7 +15,8 @@ export const useUser = defineStore('user', {
         imageUrl: googleAuthUser.value.picture,
         iat: googleAuthUser.value.iat,
         exp: googleAuthUser.value.exp,
-        isAdmin: true
+        isAdmin: true,
+        verified: googleAuthUser.value.email_verified
       }
     }
   }

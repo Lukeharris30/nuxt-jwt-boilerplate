@@ -26,40 +26,42 @@ function removeFile() {
 </script>
 
 <template>
-  <h1>Upload Files</h1>
-  <section>
-    <div class="files-upload-container">
-    <div v-if="filesToUpload.length === 0" ref="dropZoneRef" class="drop-zone flex-center flex shadow-2">
-      <div  class="flex-center flex column">
-        <QIcon name="upload" size="xl"></QIcon>
-        <div class="">Drop Files</div>
+  <div>
+    <h1>Upload Files</h1>
+    <section>
+      <div class="files-upload-container">
+      <div v-if="filesToUpload.length === 0" ref="dropZoneRef" class="drop-zone flex-center flex shadow-2">
+        <div  class="flex-center flex column">
+          <QIcon name="upload" size="xl"></QIcon>
+          <div class="">Drop Files</div>
+        </div>
       </div>
+      <div class="self-center">
+      <q-btn v-if="filesToUpload.length === 0" icon-right="upload" @click="open()" size="xl" >Add Files</q-btn>
     </div>
-    <div class="self-center">
-    <q-btn v-if="filesToUpload.length === 0" icon-right="upload" @click="open()" size="xl" >Add Files</q-btn>
-  </div>
-  </div>
-    <div class="q-pa-md" >
-      <q-list bordered v-if="filesToUpload.length > 0">
-        <q-item  v-for="(file, index ) in filesToUpload">
-          <q-item-section avatar>
-            <QIcon :name="file.type === 'image/png' ? 'image' : 'picture_as_pdf'" size="lg"></QIcon>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label top>{{ file.name }}</q-item-label>
-          </q-item-section>
-          <q-item-section>
-            <q-item-label bottom class="text-grey-8">{{ file.type }}</q-item-label>
-          </q-item-section>
-        </q-item>
-      </q-list>
     </div>
-    <div class="row q-pt-lg q-pa-md q-gutter-md">
-    <q-btn v-if="filesToUpload.length > 0" size="lg" color="primary" label="Upload" :icon-right=" filesToUpload.length > 0 ? 'done' : ''" />
-    <q-btn v-if="isOverDropZone || filesData.length > 0 || files" label="Delete" icon-right="close" @click="removeFile()" />
-    </div>
+      <div class="q-pa-md" >
+        <q-list bordered v-if="filesToUpload.length > 0">
+          <q-item  v-for="(file, index ) in filesToUpload">
+            <q-item-section avatar>
+              <QIcon :name="file.type === 'image/png' ? 'image' : 'picture_as_pdf'" size="lg"></QIcon>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label top>{{ file.name }}</q-item-label>
+            </q-item-section>
+            <q-item-section>
+              <q-item-label bottom class="text-grey-8">{{ file.type }}</q-item-label>
+            </q-item-section>
+          </q-item>
+        </q-list>
+      </div>
+      <div class="row q-pt-lg q-pa-md q-gutter-md">
+      <q-btn v-if="filesToUpload.length > 0" size="lg" color="primary" label="Upload" :icon-right=" filesToUpload.length > 0 ? 'done' : ''" />
+      <q-btn v-if="isOverDropZone || filesData.length > 0 || files" label="Delete" icon-right="close" @click="removeFile()" />
+      </div>
 
-  </section>
+    </section>
+  </div>
 
 </template>
 

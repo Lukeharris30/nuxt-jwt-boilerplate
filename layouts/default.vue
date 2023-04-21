@@ -1,5 +1,9 @@
 <script setup>
+
 import { useUser } from '../stores/user.js'
+definePageMeta({
+  middleware: 'auth'
+})
 const u = useUser()
 </script>
 
@@ -26,10 +30,10 @@ const u = useUser()
         </q-item>
       </q-toolbar>
       <q-tabs align="left">
-        <q-route-tab to="/home" label="home" />
+        <q-route-tab to="/" label="home" />
         <q-route-tab to="/upload" label="upload" />
         <q-route-tab to="/access" label="User Access" />
-        <q-route-tab to="/" label="login" />
+        <q-route-tab to="/login" label="login" />
       </q-tabs>
     </q-header>
 
