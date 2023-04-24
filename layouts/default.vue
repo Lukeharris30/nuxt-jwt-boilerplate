@@ -8,12 +8,15 @@ const u = useUser()
 <template>
   <q-layout view="hHh lpR fFf">
     <q-header class="bg-dark text-white" height-hint="98">
-      <q-toolbar class="q-pt-lg">
-        <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
-          Supplier Portal
+      <q-toolbar class="q-pt-lg ">
+        <q-toolbar-title >
+          <div >
+            <!-- <q-badge color="white" text-color="black" > -->
+            <SramLogo color="#e51937" width="200" />
+            <!-- </q-badge> -->
+            <span class="q-ml-lg ">Supplier Portal</span>
+         
+        </div>
         </q-toolbar-title>
         <q-item v-if="u.user">
           <q-item-section side>
@@ -22,7 +25,7 @@ const u = useUser()
             </q-avatar>
           </q-item-section>
           <q-item-section>
-            <q-item-label>{{ u.user.name }}</q-item-label>
+            <q-item-label class="">{{ u.user.name }}</q-item-label>
             <q-badge v-if="u.user.isAdmin" color="primary">srammie</q-badge>
           </q-item-section>
         </q-item>
@@ -46,9 +49,7 @@ const u = useUser()
     <q-footer class="q-dark text-white q-pt-lg q-pb-lg">
       <q-toolbar>
         <q-toolbar-title>
-          <q-avatar>
-            <img src="https://cdn.quasar.dev/logo-v2/svg/logo-mono-white.svg">
-          </q-avatar>
+          <SramLogo color="#fff" width="100" />
           <div>Supplier Portal</div>
         </q-toolbar-title>
       </q-toolbar>
