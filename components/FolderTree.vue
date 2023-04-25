@@ -4,7 +4,6 @@
         v-model="splitterModel"
         style="height: 400px"
       >
-  
         <template v-slot:before>
           <div class="q-pa-md">
             <q-tree
