@@ -72,12 +72,13 @@ const onLazyLoad = function({ node, key, done, fail }) {
           const label = node.name
           done([
             { name: `${label}.1` },
-            { name: `${label}.2`, lazy: true },
+            { name: `${label}.2`, lazy: true , icon: 'folder'},
             {
               name: `${label}.3`,
+              icon: 'folder',
               children: [
-                { name: `${label}.3.1`, lazy: true },
-                { name: `${label}.3.2`, lazy: true }
+                { name: `${label}.3.1`, lazy: true,  icon: 'folder' },
+                { name: `${label}.3.2`, lazy: true,  icon: 'folder' }
               ]
             }
           ])
