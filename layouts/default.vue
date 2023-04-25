@@ -35,7 +35,7 @@ const u = useUser()
         <q-route-tab v-if="u.user?.verified" to="/" label="home" />
         <q-route-tab v-if="u.user?.verified" to="/upload" label="upload" />
         <q-route-tab v-if="u.user?.verified" to="/access" label="User Access" />
-      
+        <q-route-tab v-if="u.user?.verified" to="/folders" label="folders" />
         <q-route-tab to="/login" label="login" />
       </q-tabs>
     </q-header>

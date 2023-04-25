@@ -1,23 +1,9 @@
-<!-- App.vue -->
-<template>
-    <div>
-        <q-input ref="filterRef" filled v-model="filter" label="Filter"></q-input>
-        
-        <q-tree
-        :nodes="folders"
-        v-model:selected="selected"
-        selected-color="primary"
-        node-key="name"
-        label-key="name"
-        :filter="filter"
-        @lazy-load="onLazyLoad"
-        />
-    </div>
-    <pre>{{ selected }}</pre>
-  </template>
-  
+
 <script setup>
-import { ref } from 'vue';
+definePageMeta({
+  middleware: 'auth'
+})
+
 
 const selected = ref(null)
 const filter = ref('')
@@ -55,6 +41,7 @@ const folders = ref([
                     id: 7,
                     name: 'Folder A2-2',
                     icon: 'folder',
+                    lazy:true,
                     children: []
 
                 }
@@ -100,4 +87,22 @@ const onLazyLoad = function({ node, key, done, fail }) {
   
  
 </script>
+<template>
+    <div>
+        <q-input ref="filterRef" filled v-model="filter" label="Filter"></q-input>
+        
+        <q-tree
+        :nodes="folders"
+        v-model:selected="selected"
+        selected-color="primary"
+        node-key="name"
+        label-key="name"
+        :filter="filter"
+        @lazy-load="onLazyLoad"
+        />
+    </div>
+    <pre>{{ selected }}</pre>
+  </template>
+  
+
   
