@@ -98,6 +98,7 @@ const onLazyLoad = function({ node, key, done, fail }) {
         selected-color="primary"
         node-key="name"
         label-key="name"
+        default-expand-all
         :filter="filter"
         @lazy-load="onLazyLoad"
         />
