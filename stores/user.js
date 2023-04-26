@@ -4,6 +4,15 @@ export const useUser = defineStore('user', {
   }),
 
   getters: {
+    isAuthenticated(state) {
+      if(state && state.user){
+        return state.user.verified
+      }
+      return false
+    },
+    userName(state) {
+      return state.user.name
+    }
   },
 
   actions: {

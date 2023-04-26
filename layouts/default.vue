@@ -32,11 +32,11 @@ const u = useUser()
       </q-toolbar>
       <q-tabs align="left">
         
-        <q-route-tab v-if="u.user?.verified" to="/" label="home" />
-        <q-route-tab v-if="u.user?.verified" to="/upload" label="upload" />
-        <q-route-tab v-if="u.user?.verified" to="/access" label="User Access" />
-        <q-route-tab v-if="u.user?.verified" to="/folders" label="folders" />
-        <q-route-tab to="/login" label="login" />
+        <q-route-tab v-if="u.isAuthenticated" to="/" label="home" />
+        <q-route-tab v-if="u.isAuthenticated" to="/upload" label="upload" />
+        <q-route-tab v-if="u.isAuthenticated" to="/access" label="User Access" />
+        <q-route-tab v-if="u.isAuthenticated" to="/folders" label="folders" />
+        <q-route-tab v-if="!u.isAuthenticated" to="/login" label="login" />
       </q-tabs>
     </q-header>
 
