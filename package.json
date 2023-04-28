@@ -21,10 +21,13 @@
     "nuxt-quasar-ui": "^1.6.1"
   },
   "dependencies": {
+    "@azure/msal-browser": "^2.36.0",
     "@pinia/nuxt": "^0.4.9",
     "@quasar/extras": "^1.16.2",
     "@vueuse/nuxt": "^10.0.2",
     "google-auth-library": "^8.7.0",
+    "jsonwebtoken": "^9.0.0",
+    "jwks-rsa": "^3.0.1",
     "jwt-decode": "^3.1.2",
     "pinia": "^2.0.35",
     "quasar": "^2.11.10"
