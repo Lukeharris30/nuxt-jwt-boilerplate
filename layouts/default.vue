@@ -20,8 +20,11 @@ const u = useUser()
         </q-toolbar-title>
         <q-item v-if="u.user">
           <q-item-section side>
-            <q-avatar square size="40px">
+            <q-avatar v-if="u.user?.imageUrl" square size="40px">
               <img :src="u.user.imageUrl" />
+            </q-avatar>
+            <q-avatar v-else color="primary" text-color="white" square size="40px">
+              <span>{{ u.user.name.slice(0,1) }}</span>
             </q-avatar>
           </q-item-section>
           <q-item-section>

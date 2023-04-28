@@ -33,7 +33,7 @@ export const useUser = defineStore('user', {
       this.user = {
         name: msalUser.value.name,
         email: msalUser.value.preferred_username,
-        imageUrl: msalUser.value.picture,
+        imageUrl: msalUser.value.picture || '',
         iat: msalUser.value.iat,
         exp: msalUser.value.exp,
         isAdmin: true,
