@@ -12,6 +12,7 @@ export const useMsLogin = () => {
         navigateToLoginRequestUrl: true
         }
     };
+    console.log('msalConfig', msalConfig)
     const loginRequest = {
         scopes: ["openid", "profile", "User.Read"],
     };
