@@ -11,11 +11,8 @@ const u = useUser()
       <q-toolbar class="q-pt-lg ">
         <q-toolbar-title >
           <div >
-            <!-- <q-badge color="white" text-color="black" > -->
             <SramLogo color="#e51937" width="200" />
-            <!-- </q-badge> -->
             <span class="q-ml-lg ">Supplier Portal</span>
-         
         </div>
         </q-toolbar-title>
         <q-item v-if="u.user">
