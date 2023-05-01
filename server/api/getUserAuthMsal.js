@@ -42,7 +42,6 @@ export default defineEventHandler(async (event) => {
   try {
     const token = await readBody(event);
     const user = await verifyJWT(token);
-    console.log("user", user);
     return user;
   } catch (err) {
     console.error("Error:", err);
