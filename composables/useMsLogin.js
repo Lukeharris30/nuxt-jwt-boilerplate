@@ -23,7 +23,7 @@ export const useMsLogin = () => {
         msalInstance.value = new PublicClientApplication(msalConfig)
     })
 
-    return async function loginWithMicrosoft() {
+    async function loginWithMicrosoft() {
         msalInstance.value.loginPopup(loginRequest)
         .then(async (response) => {
           // handle response
@@ -44,6 +44,11 @@ export const useMsLogin = () => {
             console.log('login error', error)
             // handle error
         });
+    }
+
+    return{
+        loginWithMicrosoft,
+        msalInstance,
     }
    
 }
