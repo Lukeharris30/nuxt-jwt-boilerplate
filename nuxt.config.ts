@@ -24,7 +24,7 @@ export default defineNuxtConfig({
     public: {
       apiBase: '/api',
       googleSecret: process.env.NUXT_GOOGLE_SECRET,
-      msalSecret: process.env.NUXT_MICRSOFT_CLIENT_ID,
+      msalSecret: process.env.NUXT_MICROSOFT_CLIENT_ID,
       msalTenant: process.env.NUXT_MICROSOFT_TENANT_ID
     }
   },

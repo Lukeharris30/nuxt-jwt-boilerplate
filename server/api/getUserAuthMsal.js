@@ -22,7 +22,7 @@ function verifyJWT(jwtToken) {
       getSigningKey,
       {
         algorithms: ["RS256"],
-        audience: process.env.NUXT_MICRSOFT_CLIENT_ID, // Replace with your app's client ID
+        audience: process.env.NUXT_MICROSOFT_CLIENT_ID, // Replace with your app's client ID
         issuer: `https://login.microsoftonline.com/${process.env.NUXT_MICROSOFT_TENANT_ID}/v2.0`, // Replace TENANT_ID with your Azure AD tenant ID
       },
       (err, decoded) => {
