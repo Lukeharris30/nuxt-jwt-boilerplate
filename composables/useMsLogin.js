@@ -1,8 +1,10 @@
 import { PublicClientApplication } from "@azure/msal-browser";
 import { useUser } from '~/stores/user'
 
+
 export const useMsLogin = () => {
     const runtimeConfig = useRuntimeConfig()
+    console.log(runtimeConfig.public.msalSecret)
     const msalConfig = {
         auth: {
         clientId: runtimeConfig.public.msalSecret, // This is your application's client ID from the Azure portal.
