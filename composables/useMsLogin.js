@@ -18,11 +18,11 @@ export const useMsLogin = () => {
 
     const u = useUser()
     const msalInstance = ref(null)
-
     onMounted(() => {
-        msalInstance.value = new PublicClientApplication(msalConfig)
+      msalInstance.value = new PublicClientApplication(msalConfig)
+      console.log('msalInstance', msalInstance.value)
     })
-
+  
     async function loginWithMicrosoft() {
         msalInstance.value.loginPopup(loginRequest)
         .then(async (response) => {
