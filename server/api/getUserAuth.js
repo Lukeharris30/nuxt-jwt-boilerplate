@@ -18,8 +18,10 @@ async function verifyToken(idToken) {
 
 // Event handler
 export default defineEventHandler(async (event) => {
-  const idToken = await readBody(event);
-
+  // const idToken = await readBody(event);
+  // console.log('auth', event.node.req)
+  const header = await getHeader(event, 'Authorization');
+  const idToken = header.replace('Bearer ', '')
   // Verify token and return the user
   return verifyToken(idToken);
 });

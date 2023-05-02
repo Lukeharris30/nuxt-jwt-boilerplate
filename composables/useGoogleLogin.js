@@ -19,7 +19,10 @@ export const useGoogleLogin = () => {
     const token = response.credential;
     const { data } = await useFetch("/api/getUserAuth", {
       method: "POST",
-      body: token,
+      headers: { "Content-Type": "application/json" ,
+                "Authorization": `Bearer ${token}`
+              },
+      // body: token,
     });
     u.setGoogleUser(data);
     if (u.user.verified) {

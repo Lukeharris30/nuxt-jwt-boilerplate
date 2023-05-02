@@ -20,7 +20,7 @@ export const useMsLogin = () => {
     const msalInstance = ref(null)
     onMounted(() => {
       msalInstance.value = new PublicClientApplication(msalConfig)
-      console.log('msalInstance', msalInstance.value)
+      // console.log('msalInstance', msalInstance.value)
     })
   
     async function loginWithMicrosoft() {
@@ -30,7 +30,9 @@ export const useMsLogin = () => {
           const token = response.idToken
           const { data } = await useFetch('/api/getUserAuthMsal', {
             method: 'POST',
-            body: token
+            headers: { "Content-Type": "application/json" ,
+            "Authorization": `Bearer ${token}`
+          },
           })
           if (data.value) {
             u.setMsalUser(data)

@@ -40,7 +40,7 @@ function verifyJWT(jwtToken) {
 
 export default defineEventHandler(async (event) => {
   try {
-    const token = await readBody(event);
+    const token = await getHeader(event, 'Authorization').replace('Bearer ', '');
     const user = await verifyJWT(token);
     return user;
   } catch (err) {
