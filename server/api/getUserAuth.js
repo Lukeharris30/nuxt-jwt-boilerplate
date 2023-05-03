@@ -18,8 +18,7 @@ async function verifyToken(idToken) {
 
 // Event handler
 export default defineEventHandler(async (event) => {
-  // const idToken = await readBody(event);
-  // console.log('auth', event.node.req)
+  // Get the token from the Authorization header
   const header = await getHeader(event, 'Authorization');
   const idToken = header.replace('Bearer ', '')
   // Verify token and return the user
