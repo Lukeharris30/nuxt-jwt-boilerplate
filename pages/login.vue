@@ -1,7 +1,6 @@
 <script  setup>
 const {loginWithMicrosoft, msalInstance} = useMsLogin()
 const googleLogin = useGoogleLogin()
-console.log('msal from component', msalInstance)
 </script>
 
 <template>
