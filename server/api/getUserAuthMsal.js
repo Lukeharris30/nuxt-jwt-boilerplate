@@ -37,7 +37,7 @@ function verifyJWT(jwtToken) {
           console.error("JWT verification failed:", err);
           reject(err);
         } else {
-          console.log("JWT successfully verified:", decoded);
+          // console.log("JWT successfully verified:", decoded);
           resolve(decoded);
         }
       }
