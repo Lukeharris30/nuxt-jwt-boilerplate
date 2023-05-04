@@ -47,7 +47,8 @@ function verifyJWT(jwtToken) {
 
 export default defineEventHandler(async (event) => {
   try {
-    const token = getHeader(event, 'Authorization').replace('Bearer ', '');
+    // const token = getHeader(event, 'Authorization').replace('Bearer ', '');
+    const token = await readBody(event);
     const user = await verifyJWT(token);
     return user;
   } catch (err) {
