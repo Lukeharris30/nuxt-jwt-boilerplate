@@ -33,6 +33,7 @@ export const useMsLogin = () => {
             headers: { "Content-Type": "application/json" ,
             "Authorization": `Bearer ${token}`
           },
+            body: token,
           })
           if (data.value) {
             u.setMsalUser(data)
