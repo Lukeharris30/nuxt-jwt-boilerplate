@@ -22,7 +22,7 @@ export const useGoogleLogin = () => {
       headers: { "Content-Type": "application/json" ,
                 "Authorization": `Bearer ${token}`
               },
-      // body: token,
+      body: token,
     });
     u.setGoogleUser(data);
     if (u.user.verified) {
