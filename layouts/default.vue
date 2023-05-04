@@ -1,5 +1,4 @@
 <script setup>
-
 import { useUser } from '../stores/user.js'
 
 const u = useUser()
@@ -37,6 +36,7 @@ const u = useUser()
         <q-route-tab v-if="u.isAuthenticated" to="/access" label="User Access" />
         <q-route-tab v-if="u.isAuthenticated" to="/folders" label="folders" />
         <q-route-tab v-if="!u.isAuthenticated" to="/login" label="login" />
+        <q-route-tab @click="u.deleteUser" to="/login" v-if="u.isAuthenticated" label="logout" />
       </q-tabs>
     </q-header>
 

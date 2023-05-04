@@ -2,6 +2,7 @@
 const {loginWithMicrosoft, msalInstance} = useMsLogin()
 const googleLogin = useGoogleLogin()
 
+    
 </script>
 
 <template>
@@ -9,6 +10,8 @@ const googleLogin = useGoogleLogin()
     <h1>Login</h1>
     <div class="q-pa-md q-gutter-sm column-inline items-center">
       <div id="googleButton"></div>
+      
+    
       <q-btn unelevated class="ms-login no-shadow" @click="loginWithMicrosoft"><svg xmlns="http://www.w3.org/2000/svg"
           width="21" height="21" viewBox="0 0 21 21">
           <rect x="1" y="1" width="9" height="9" fill="#f25022" />

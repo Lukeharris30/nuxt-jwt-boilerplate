@@ -10,9 +10,6 @@ export const useUser = defineStore('user', {
       }
       return false
     },
-    userName(state) {
-      return state.user.name
-    }
   },
 
   actions: {
@@ -39,6 +36,9 @@ export const useUser = defineStore('user', {
         isAdmin: true,
         verified: true
       }
+    }, 
+    deleteUser() {
+      this.user = null
     }
   }
 })
