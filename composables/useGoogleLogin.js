@@ -29,4 +29,12 @@ export const useGoogleLogin = () => {
       await navigateTo("/");
     } else await navigateTo("/login");
   }
+
+  const logoutGoogle = () => {
+    google.accounts.id.disableAutoSelect();
+    u.deleteUser();
+  }
+  
+  return{logoutGoogle}
+
 };
