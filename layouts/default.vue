@@ -35,8 +35,7 @@ const u = useUser()
         <q-route-tab v-if="u.isAuthenticated" to="/upload" label="upload" />
         <q-route-tab v-if="u.isAuthenticated" to="/access" label="User Access" />
         <q-route-tab v-if="u.isAuthenticated" to="/folders" label="folders" />
-        <q-route-tab v-if="!u.isAuthenticated" to="/login" label="login" />
-        <q-route-tab @click="u.deleteUser" to="/login" v-if="u.isAuthenticated" label="logout" />
+        <q-route-tab  to="/login" :label= "u.isAuthenticated ? 'logout' : 'login'" />
       </q-tabs>
     </q-header>
 

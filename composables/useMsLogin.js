@@ -49,9 +49,15 @@ export const useMsLogin = () => {
         });
     }
 
+    const msalLogout = function() {
+      msalInstance.value.logoutPopup();
+      u.deleteUser()
+    }
+
     return{
         loginWithMicrosoft,
         msalInstance,
+        msalLogout
     }
    
 }

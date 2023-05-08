@@ -22,7 +22,8 @@ export const useUser = defineStore('user', {
         iat: googleAuthUser.value.iat,
         exp: googleAuthUser.value.exp,
         isAdmin: true,
-        verified: googleAuthUser.value.email_verified
+        verified: googleAuthUser.value.email_verified,
+        userType: 'google'
       }
     },
     setMsalUser(msalUser) {
@@ -34,7 +35,8 @@ export const useUser = defineStore('user', {
         iat: msalUser.value.iat,
         exp: msalUser.value.exp,
         isAdmin: true,
-        verified: true
+        verified: true,
+        userType: 'msal'
       }
     }, 
     deleteUser() {
