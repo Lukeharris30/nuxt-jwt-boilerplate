@@ -10,7 +10,7 @@ export default defineEventHandler((event) => {
         // event.node.req.headers['Content-Type'] = 'application/json's
         event.node.req.headers['client_id'] = useRuntimeConfig().mulesoftClientId
         event.node.req.headers['client_secret'] = useRuntimeConfig().mulesoftClientSecret
-        console.log('middleware', event.node.req.headers)
+        // console.log('middleware', event.node.req.headers)
     }
 
    

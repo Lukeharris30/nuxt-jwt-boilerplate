@@ -13,7 +13,7 @@ export const useUser = defineStore('user', {
   },
 
   actions: {
-    setGoogleUser(googleAuthUser) {
+    setGoogleUser(googleAuthUser, callback) {
       console.log('setting', googleAuthUser)
       this.user = {
         name: googleAuthUser.value.name,
