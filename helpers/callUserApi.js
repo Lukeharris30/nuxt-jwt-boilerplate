@@ -7,12 +7,12 @@ export const getUserApi = async (jwt, userEmail, clientId, clientSecret) => {
         client_secret: clientSecret
     }
     console.log(headers)
-    console.log('url', `${useRuntimeConfig().mulesoftEndpoint}/user/${userEmail}`)
+  
     const data = await $fetch(`${useRuntimeConfig().mulesoftEndpoint}/user/${userEmail}`, {
         method: 'GET',
         // bearer token auth
         headers
     })
-    console.log('data', data)
+   
     return data
 }
