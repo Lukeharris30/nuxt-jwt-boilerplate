@@ -19,7 +19,9 @@ export default defineNuxtConfig({
   },
   runtimeConfig: {
     // The private keys which are only available server-side
-    apiSecret: 'xxx',
+    mulesoftEndpoint: 'https://api-stage.sram.com/exp-supplier-portal-api-dev/api/v1',
+    mulesoftClientId: process.env.NUXT_MULESOFT_CLIENT_ID,
+    mulesoftClientSecret: process.env.NUXT_MULESOFT_CLIENT_SECRET,
     // Keys within public are also exposed client-side
     public: {
       apiBase: '/api',
