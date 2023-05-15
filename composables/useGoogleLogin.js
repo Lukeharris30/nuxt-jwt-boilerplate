@@ -3,7 +3,7 @@ import { useUser } from "~/stores/user";
 export const useGoogleLogin = () => {
   const runtimeConfig = useRuntimeConfig();
   const u = useUser();
-
+ 
   onMounted(() => {
     google.accounts.id.initialize({
       client_id: runtimeConfig.public.googleSecret,
@@ -25,7 +25,9 @@ export const useGoogleLogin = () => {
       body: token,
     });
     u.setGoogleUser(data);
-    if (u.user.verified) {
+
+
+    if (u.user) {
       await navigateTo("/");
     } else await navigateTo("/login");
   }
