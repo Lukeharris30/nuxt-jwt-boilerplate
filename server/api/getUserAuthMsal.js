@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 import JwksRsa from "jwks-rsa";
+import jwt_decode from "jwt-decode";
+import { getUserApi } from "~/helpers/callUserApi";
+import { getUserJwt } from "~/helpers/getUserJwt";
 
 // Configure the jwksClient to retrieve the signing keys from Microsoft's JWKS endpoint
 const client = JwksRsa({
@@ -49,7 +52,48 @@ export default defineEventHandler(async (event) => {
   try {
     // const token = getHeader(event, 'Authorization').replace('Bearer ', '');
     const token = await readBody(event);
-    const user = await verifyJWT(token);
+    const validMsalUser = await verifyJWT(token);
+    let mulesoftToken = ''
+    let mulesoftUser = {};
+    let user = {};
+
+    if (validMsalUser) {
+      mulesoftToken = await getUserJwt(validMsalUser.email)
+    } else {
+      throw new Error('Invalid Microsoft user. Please provide a valid Microsoft user.');
+    }
+
+    // get mulesoft user info form token
+    mulesoftUser = jwt_decode(mulesoftToken);
+
+    // fetch mulesoft user info
+    const mulsoftUserObject = await getUserApi(
+      mulesoftToken,
+      mulesoftUser.email,
+      useRuntimeConfig().mulesoftClientId,
+      useRuntimeConfig().mulesoftClientSecret
+    );
+
+    // create user object with the three sources of data
+    if (mulesoftToken && validMsalUser) {
+      user = {
+        ...validMsalUser,
+        ...mulesoftUser,
+        ...mulsoftUserObject,
+      };
+    }
+
+    // set httpOnly cookie with token
+    if (mulesoftToken) {
+      setCookie(event, "token", mulesoftToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: mulesoftUser.exp,
+      });
+    }
+
+
     return user;
   } catch (err) {
     console.error("Error:", err);

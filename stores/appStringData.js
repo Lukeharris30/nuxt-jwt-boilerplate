@@ -27,6 +27,9 @@ export const useAppStringData = defineStore('appStringData', {
       async setAppData(data) {
         this.appData = data
       },
+      deleteAppData() {
+        this.appData = null
+      }
       
       
     }

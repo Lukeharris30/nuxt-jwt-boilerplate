@@ -1,6 +1,6 @@
 import { PublicClientApplication } from "@azure/msal-browser";
 import { useUser } from '~/stores/user'
-
+import { useAppStringData } from "~/stores/appStringData";
 
 export const useMsLogin = () => {
     const runtimeConfig = useRuntimeConfig()
@@ -17,6 +17,7 @@ export const useMsLogin = () => {
     };
 
     const u = useUser()
+    const appData = useAppStringData()
     const msalInstance = ref(null)
     onMounted(() => {
       msalInstance.value = new PublicClientApplication(msalConfig)
@@ -52,6 +53,8 @@ export const useMsLogin = () => {
     const msalLogout = function() {
       msalInstance.value.logoutPopup();
       u.deleteUser()
+      appData.deleteAppData()
+
     }
 
     return{
