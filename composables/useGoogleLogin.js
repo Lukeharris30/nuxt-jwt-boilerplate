@@ -1,8 +1,10 @@
 import { useUser } from "~/stores/user";
+import { useAppStringData } from "~/stores/appStringData";
 
 export const useGoogleLogin = () => {
   const runtimeConfig = useRuntimeConfig();
   const u = useUser();
+  const appData = useAppStringData();
  
   onMounted(() => {
     google.accounts.id.initialize({
@@ -35,6 +37,7 @@ export const useGoogleLogin = () => {
   const logoutGoogle = () => {
     google.accounts.id.disableAutoSelect();
     u.deleteUser();
+    appData.deleteAppData();
   }
   
   return{logoutGoogle}

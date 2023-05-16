@@ -1,5 +1,6 @@
 import jwt from "jsonwebtoken";
 import JwksRsa from "jwks-rsa";
+import jwt_decode from "jwt-decode";
 
 // Configure the jwksClient to retrieve the signing keys from Microsoft's JWKS endpoint
 const client = JwksRsa({
@@ -10,7 +11,7 @@ const client = JwksRsa({
 function getSigningKey(header, callback) {
   client.getSigningKey(header.kid, (err, key) => {
     if (err) {
-      console.error('Error getting signing key:', err);
+      console.error("Error getting signing key:", err);
       callback(err); // Pass the error as the first argument
       return;
     }
@@ -47,13 +48,58 @@ function verifyJWT(jwtToken) {
 
 export default defineEventHandler(async (event) => {
   try {
-    // const token = getHeader(event, 'Authorization').replace('Bearer ', '');
+
+    let mulesoftToken = "";
+    let mulesoftUser = {};
+    let user = {};
+
+    // get token
     const token = await readBody(event);
-    const user = await verifyJWT(token);
+    const validMsalUser = await verifyJWT(token);
+   
+    // get jwt from mulesoft
+    if (validMsalUser) {
+      mulesoftToken = await getUserJwt(validMsalUser.email);
+    } else {
+      throw new Error(
+        "Invalid Microsoft user. Please provide a valid Microsoft user."
+      );
+    }
+
+    // get mulesoft user info form token
+    mulesoftUser = jwt_decode(mulesoftToken);
+
+    // fetch mulesoft user info
+    const mulsoftUserObject = await getUserApi(
+      mulesoftToken,
+      mulesoftUser.email,
+      useRuntimeConfig().mulesoftClientId,
+      useRuntimeConfig().mulesoftClientSecret
+    );
+
+    // create user object with the three sources of data
+    if (mulesoftToken && validMsalUser) {
+      user = {
+        ...validMsalUser,
+        ...mulesoftUser,
+        ...mulsoftUserObject,
+      };
+    }
+
+    // set httpOnly cookie with token
+    if (mulesoftToken) {
+      setCookie(event, "token", mulesoftToken, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "strict",
+        maxAge: mulesoftUser.exp,
+      });
+    }
+
     return user;
   } catch (err) {
     console.error("Error:", err);
     // Handle the error, return an error response or throw an exception
-    return err
+    return err;
   }
 });
