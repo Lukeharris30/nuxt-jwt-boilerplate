@@ -1,8 +1,6 @@
 import jwt from "jsonwebtoken";
 import JwksRsa from "jwks-rsa";
 import jwt_decode from "jwt-decode";
-import { getUserApi } from "~/helpers/callUserApi";
-import { getUserJwt } from "~/helpers/getUserJwt";
 
 // Configure the jwksClient to retrieve the signing keys from Microsoft's JWKS endpoint
 const client = JwksRsa({
@@ -13,7 +11,7 @@ const client = JwksRsa({
 function getSigningKey(header, callback) {
   client.getSigningKey(header.kid, (err, key) => {
     if (err) {
-      console.error('Error getting signing key:', err);
+      console.error("Error getting signing key:", err);
       callback(err); // Pass the error as the first argument
       return;
     }
@@ -50,17 +48,22 @@ function verifyJWT(jwtToken) {
 
 export default defineEventHandler(async (event) => {
   try {
-    // const token = getHeader(event, 'Authorization').replace('Bearer ', '');
-    const token = await readBody(event);
-    const validMsalUser = await verifyJWT(token);
-    let mulesoftToken = ''
+
+    let mulesoftToken = "";
     let mulesoftUser = {};
     let user = {};
 
+    // get token
+    const token = await readBody(event);
+    const validMsalUser = await verifyJWT(token);
+   
+    // get jwt from mulesoft
     if (validMsalUser) {
-      mulesoftToken = await getUserJwt(validMsalUser.email)
+      mulesoftToken = await getUserJwt(validMsalUser.email);
     } else {
-      throw new Error('Invalid Microsoft user. Please provide a valid Microsoft user.');
+      throw new Error(
+        "Invalid Microsoft user. Please provide a valid Microsoft user."
+      );
     }
 
     // get mulesoft user info form token
@@ -93,11 +96,10 @@ export default defineEventHandler(async (event) => {
       });
     }
 
-
     return user;
   } catch (err) {
     console.error("Error:", err);
     // Handle the error, return an error response or throw an exception
-    return err
+    return err;
   }
 });

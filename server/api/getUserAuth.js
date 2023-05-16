@@ -1,7 +1,5 @@
 import { OAuth2Client } from "google-auth-library";
 import jwt_decode from "jwt-decode";
-import { getUserApi } from "~/helpers/callUserApi";
-import { getUserJwt } from "~/helpers/getUserJwt";
 
 // Verify token function
 async function verifyToken(idToken) {
@@ -21,13 +19,18 @@ async function verifyToken(idToken) {
 
 // Event handler
 export default defineEventHandler(async (event) => {
-  // Verify token
-  const idToken = await readBody(event);
+  
   let mulesoftToken = "";
   let mulesoftUser = {};
-  const validGoogleUser = await verifyToken(idToken);
   let user = {};
 
+  // get token
+  const idToken = await readBody(event);
+
+  // verify token
+  const validGoogleUser = await verifyToken(idToken);
+ 
+  // get jwt from mulesoft
   if (validGoogleUser) {
     mulesoftToken = await getUserJwt(validGoogleUser.email)
   } else {
@@ -44,6 +47,7 @@ export default defineEventHandler(async (event) => {
     useRuntimeConfig().mulesoftClientId,
     useRuntimeConfig().mulesoftClientSecret
   );
+  
   // create user object with the three sources of data
   if (mulesoftToken && validGoogleUser) {
     user = {
