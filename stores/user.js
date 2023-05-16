@@ -1,3 +1,4 @@
+
 export const useUser = defineStore('user', {
   state: () => ({
     user: ref(null)
@@ -28,6 +29,7 @@ export const useUser = defineStore('user', {
         spEmail: googleAuthUser.value.email,
         ...googleAuthUser.value
       }
+      sessionStorage.setItem('userState', JSON.stringify(this.user))
     },
     setMsalUser(msalUser) {
       console.log('setting', msalUser)
@@ -39,11 +41,17 @@ export const useUser = defineStore('user', {
         exp: msalUser.value.exp,
         isAdmin: true,
         verified: true,
-        userType: 'msal'
+        userType: 'msal',
+        ...msalUser.value
       }
-    }, 
+      sessionStorage.setItem('userState', JSON.stringify(this.user))
+    },
+    setUser(user) {
+      this.user = user;
+    },
     deleteUser() {
       this.user = null
+      sessionStorage.removeItem('userState')
     }
   }
 })

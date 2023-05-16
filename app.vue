@@ -10,9 +10,21 @@ const loadAppStringData = async () => {
   appData.setAppData(appString.value)
 }
 
+const userFromStorage = ref(sessionStorage.getItem('userState'))
+
+if(userFromStorage.value) {
+  u.setUser(JSON.parse(userFromStorage.value))
+  if (u.user) {
+    // get the latest appData from user
+    loadAppStringData()
+    
+    await navigateTo("/");
+  } else await navigateTo("/login")
+}
+
 u.$subscribe((mutation, state) => {
   if(state.user && u.isAuthenticated) {
-        loadAppStringData()
+    loadAppStringData()
   }
 })
 
