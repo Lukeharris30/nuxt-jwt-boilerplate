@@ -21,7 +21,6 @@ export const useAppStringData = defineStore('appStringData', {
         return login?.display
       }
     },
-  
     
     actions: {
       async setAppData(data) {

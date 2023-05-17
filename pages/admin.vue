@@ -61,8 +61,6 @@ const folders = ref([
 }
 ]);
 
-const lazy = ref(folders)
-
 const onLazyLoad = function({ node, key, done, fail }) {
         // call fail() if any error occurs
     console.log('lazy loading', {node}, {key}, {done})
