@@ -1,3 +1,4 @@
+
 export default defineEventHandler(async (event) => {
     const jwt = await getCookie(event, "token");
     event.node.req.headers = {}
