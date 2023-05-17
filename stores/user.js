@@ -1,21 +1,20 @@
-
-export const useUser = defineStore('user', {
+export const useUser = defineStore("user", {
   state: () => ({
-    user: ref(null)
+    user: ref(null),
   }),
 
   getters: {
     isAuthenticated(state) {
-      if(state && state.user){
-        return state.user.verified
+      if (state && state.user) {
+        return state.user.verified;
       }
-      return false
+      return false;
     },
   },
 
   actions: {
     setGoogleUser(googleAuthUser, callback) {
-      console.log('setting', googleAuthUser)
+      console.log("setting", googleAuthUser);
       this.user = {
         name: googleAuthUser.value.name,
         email: googleAuthUser.value.email,
@@ -24,34 +23,34 @@ export const useUser = defineStore('user', {
         exp: googleAuthUser.value.exp,
         isAdmin: googleAuthUser.value.isAdmin,
         verified: googleAuthUser.value.email_verified,
-        userType: 'google',
+        userType: "google",
         language: googleAuthUser.value.language,
         spEmail: googleAuthUser.value.email,
-        ...googleAuthUser.value
-      }
-      sessionStorage.setItem('userState', JSON.stringify(this.user))
+        ...googleAuthUser.value,
+      };
+      sessionStorage.setItem("userState", JSON.stringify(this.user));
     },
     setMsalUser(msalUser) {
-      console.log('setting', msalUser)
+      console.log("setting", msalUser);
       this.user = {
         name: msalUser.value.name,
         email: msalUser.value.preferred_username,
-        imageUrl: msalUser.value.picture || '',
+        imageUrl: msalUser.value.picture || "",
         iat: msalUser.value.iat,
         exp: msalUser.value.exp,
         isAdmin: true,
         verified: true,
-        userType: 'msal',
-        ...msalUser.value
-      }
-      sessionStorage.setItem('userState', JSON.stringify(this.user))
+        userType: "msal",
+        ...msalUser.value,
+      };
+      sessionStorage.setItem("userState", JSON.stringify(this.user));
     },
     setUser(user) {
       this.user = user;
     },
     deleteUser() {
-      this.user = null
-      sessionStorage.removeItem('userState')
-    }
-  }
-})
+      this.user = null;
+      sessionStorage.removeItem("userState");
+    },
+  },
+});

@@ -6,7 +6,7 @@ export const useGoogleLogin = () => {
   const runtimeConfig = useRuntimeConfig();
   const u = useUser();
   const appData = useAppStringData();
- 
+
   onMounted(() => {
     google.accounts.id.initialize({
       client_id: runtimeConfig.public.googleSecret,
@@ -22,13 +22,13 @@ export const useGoogleLogin = () => {
     const token = response.credential;
     const { data } = await useFetch("/api/getUserAuth", {
       method: "POST",
-      headers: { "Content-Type": "application/json" ,
-                "Authorization": `Bearer ${token}`
-              },
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
       body: token,
     });
     u.setGoogleUser(data);
-
 
     if (u.user) {
       await navigateTo("/");
@@ -39,8 +39,7 @@ export const useGoogleLogin = () => {
     google.accounts.id.disableAutoSelect();
     u.deleteUser();
     appData.deleteAppData();
-  }
-  
-  return{logoutGoogle}
+  };
 
+  return { logoutGoogle };
 };

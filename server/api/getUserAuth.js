@@ -20,7 +20,6 @@ async function verifyToken(idToken) {
 
 // Event handler
 export default defineEventHandler(async (event) => {
-  
   let mulesoftToken = "";
   let mulesoftUser = {};
   let user = {};
@@ -30,14 +29,14 @@ export default defineEventHandler(async (event) => {
 
   // verify token
   const validGoogleUser = await verifyToken(idToken);
- 
+
   // get jwt from mulesoft
   if (validGoogleUser) {
-    mulesoftToken = await getUserJwt(validGoogleUser.email)
+    mulesoftToken = await getUserJwt(validGoogleUser.email);
   } else {
-    throw new Error('Invalid Google user. Please provide a valid Google user.');
+    throw new Error("Invalid Google user. Please provide a valid Google user.");
   }
-  
+
   // get mulesoft user info form token
   mulesoftUser = jwt_decode(mulesoftToken);
 
@@ -48,7 +47,7 @@ export default defineEventHandler(async (event) => {
     useRuntimeConfig().mulesoftClientId,
     useRuntimeConfig().mulesoftClientSecret
   );
-  
+
   // create user object with the three sources of data
   if (mulesoftToken && validGoogleUser) {
     user = {

@@ -48,7 +48,6 @@ function verifyJWT(jwtToken) {
 
 export default defineEventHandler(async (event) => {
   try {
-
     let mulesoftToken = "";
     let mulesoftUser = {};
     let user = {};
@@ -56,7 +55,7 @@ export default defineEventHandler(async (event) => {
     // get token
     const token = await readBody(event);
     const validMsalUser = await verifyJWT(token);
-   
+
     // get jwt from mulesoft
     if (validMsalUser) {
       mulesoftToken = await getUserJwt(validMsalUser.email);

@@ -1,100 +1,90 @@
-
 <script setup>
 definePageMeta({
-  middleware: 'auth'
-})
+  middleware: "auth",
+});
 
-
-const selected = ref(null)
-const filter = ref('')
+const selected = ref(null);
+const filter = ref("");
 
 const folders = ref([
-{
+  {
     id: 1,
-    name: 'Root',
-    icon: 'folder',
+    name: "Root",
+    icon: "folder",
     children: [
-    {
+      {
         id: 2,
-        name: 'Folder A',
-        icon: 'folder',
-       
-        children: [
-        {
-            id: 3,
-            name: 'Folder A1',
-            icon: 'folder',
-            lazy: true,
-            children: []
-        },
-        {
-            id: 4,
-            name: 'Folder A2',
-            icon: 'folder',
-            children: [
-            {
-                id: 5,
-                name: 'Folder A2-1',
-                icon: 'folder',
-                children: [
-                {
-                    id: 7,
-                    name: 'Folder A2-2',
-                    icon: 'folder',
-                    lazy:true,
-                    children: []
+        name: "Folder A",
+        icon: "folder",
 
-                }
-                ]
-            }
-            ]
-        }
-        ]
-    },
-    {
+        children: [
+          {
+            id: 3,
+            name: "Folder A1",
+            icon: "folder",
+            lazy: true,
+            children: [],
+          },
+          {
+            id: 4,
+            name: "Folder A2",
+            icon: "folder",
+            children: [
+              {
+                id: 5,
+                name: "Folder A2-1",
+                icon: "folder",
+                children: [
+                  {
+                    id: 7,
+                    name: "Folder A2-2",
+                    icon: "folder",
+                    lazy: true,
+                    children: [],
+                  },
+                ],
+              },
+            ],
+          },
+        ],
+      },
+      {
         id: 6,
-        name: 'Folder B',
-        icon: 'folder',
-        children: []
-    }
-    ]
-}
+        name: "Folder B",
+        icon: "folder",
+        children: [],
+      },
+    ],
+  },
 ]);
 
-const onLazyLoad = function({ node, key, done, fail }) {
-        // call fail() if any error occurs
-    console.log('lazy loading', {node}, {key}, {done})
-        setTimeout(() => {
-          // simulate loading and setting an empty node
+const onLazyLoad = function ({ node, key, done, fail }) {
+  // call fail() if any error occurs
+  console.log("lazy loading", { node }, { key }, { done });
+  setTimeout(() => {
+    // simulate loading and setting an empty node
 
-          const label = node.name
-          done([
-            { name: `${label}.1` },
-            { name: `${label}.2`, lazy: true , icon: 'folder'},
-            {
-              name: `${label}.3`,
-              icon: 'folder',
-              children: [
-                { name: `${label}.3.1`, lazy: true,  icon: 'folder' },
-                { name: `${label}.3.2`, lazy: true,  icon: 'folder' }
-              ]
-            }
-          ])
-        }, 1000)
-        // return
-      }
-  
- 
+    const label = node.name;
+    done([
+      { name: `${label}.1` },
+      { name: `${label}.2`, lazy: true, icon: "folder" },
+      {
+        name: `${label}.3`,
+        icon: "folder",
+        children: [
+          { name: `${label}.3.1`, lazy: true, icon: "folder" },
+          { name: `${label}.3.2`, lazy: true, icon: "folder" },
+        ],
+      },
+    ]);
+  }, 1000);
+  // return
+};
 </script>
 <template>
   <div>
-    <q-input
-      ref="filterRef"
-      v-model="filter"
-      filled
-      label="Filter"
-    />
-        
+    <q-input ref="filterRef" v-model="filter" filled label="Filter" />
+
     <q-tree
       v-model:selected="selected"
       :nodes="folders"
@@ -108,6 +98,3 @@ const onLazyLoad = function({ node, key, done, fail }) {
     <pre>{{ selected }}</pre>
   </div>
 </template>
-  
-
-  

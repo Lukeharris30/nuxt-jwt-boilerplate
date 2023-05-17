@@ -1,31 +1,29 @@
 <script setup>
-
 definePageMeta({
-  middleware: 'auth'
-})
+  middleware: "auth",
+});
 
-const dropZoneRef = ref('')
+const dropZoneRef = ref("");
 
-const filesData = ref([])
-const { open, reset, files, onChange } = useFileDialog()
+const filesData = ref([]);
+const { open, reset, files, onChange } = useFileDialog();
 
 function onDrop(files) {
-  console.log('dropped', files)
-  filesData.value = files
+  console.log("dropped", files);
+  filesData.value = files;
 }
 
+const { isOverDropZone } = useDropZone(dropZoneRef, onDrop);
 
-const { isOverDropZone } = useDropZone(dropZoneRef, onDrop)
-
-const filesToUpload = computed(() => files.value ? files.value : filesData.value
-
-) 
+const filesToUpload = computed(() =>
+  files.value ? files.value : filesData.value
+);
 
 function removeFile() {
-  console.log('removing')
-  reset()
-  filesData.value = []
-} 
+  console.log("removing");
+  reset();
+  filesData.value = [];
+}
 </script>
 
 <template>
@@ -39,13 +37,8 @@ function removeFile() {
           class="drop-zone flex-center flex shadow-2"
         >
           <div class="flex-center flex column">
-            <QIcon
-              name="upload"
-              size="xl"
-            />
-            <div class="">
-              Drop Files
-            </div>
+            <QIcon name="upload" size="xl" />
+            <div class="">Drop Files</div>
           </div>
         </div>
         <div class="self-center">
@@ -60,14 +53,8 @@ function removeFile() {
         </div>
       </div>
       <div class="q-pa-md">
-        <q-list
-          v-if="filesToUpload.length > 0"
-          bordered
-        >
-          <q-item
-            v-for="(file, index ) in filesToUpload"
-            :key="index"
-          >
+        <q-list v-if="filesToUpload.length > 0" bordered>
+          <q-item v-for="(file, index) in filesToUpload" :key="index">
             <q-item-section avatar>
               <QIcon
                 :name="file.type === 'image/png' ? 'image' : 'picture_as_pdf'"
@@ -80,10 +67,7 @@ function removeFile() {
               </q-item-label>
             </q-item-section>
             <q-item-section>
-              <q-item-label
-                bottom
-                class="text-grey-8"
-              >
+              <q-item-label bottom class="text-grey-8">
                 {{ file.type }}
               </q-item-label>
             </q-item-section>
@@ -96,7 +80,7 @@ function removeFile() {
           size="lg"
           color="primary"
           label="Upload"
-          :icon-right=" filesToUpload.length > 0 ? 'done' : ''"
+          :icon-right="filesToUpload.length > 0 ? 'done' : ''"
         />
         <q-btn
           v-if="isOverDropZone || filesData.length > 0 || files"

@@ -17,7 +17,6 @@ export const getUserJwt = async (userEmail) => {
     );
 
     return token;
-    
   } catch (error) {
     // 404 status code indicates Not Found
     if (error.response && error.response.status === 404) {
@@ -27,5 +26,4 @@ export const getUserJwt = async (userEmail) => {
       throw error;
     }
   }
-
 };
