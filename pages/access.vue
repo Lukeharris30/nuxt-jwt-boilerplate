@@ -1,3 +1,4 @@
+<!-- eslint-disable no-undef -->
 <script setup>
 definePageMeta({
   middleware: 'auth'
@@ -6,6 +7,6 @@ definePageMeta({
 
 </script>
 <template>
-    <h1>User Settings</h1>
-    <!-- <pre>{{ appData }}</pre> -->
+  <h1>User Settings</h1>
+  <!-- <pre>{{ appData }}</pre> -->
 </template>

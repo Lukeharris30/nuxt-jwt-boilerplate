@@ -10,5 +10,5 @@ definePageMeta({
 </script>
 
 <template>
-    <FolderTree></FolderTree>
+  <FolderTree />
 </template>
