@@ -27,6 +27,16 @@ export const useAppStringData = defineStore("appStringData", {
       );
       return login?.display;
     },
+    languageOptions: (state) => {
+      if (state?.appData) {
+        return state.appData?.locales.map((item) => {
+          return {
+            label: item.display,
+            value: item.locale,
+          };
+        });
+      }
+    },
   },
 
   actions: {
