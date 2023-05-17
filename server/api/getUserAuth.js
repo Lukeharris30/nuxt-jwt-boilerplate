@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 import { OAuth2Client } from "google-auth-library";
 import jwt_decode from "jwt-decode";
 

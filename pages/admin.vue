@@ -89,22 +89,27 @@ const onLazyLoad = function({ node, key, done, fail }) {
  
 </script>
 <template>
-    <div>
-        <q-input ref="filterRef" filled v-model="filter" label="Filter"></q-input>
+  <div>
+    <q-input
+      ref="filterRef"
+      v-model="filter"
+      filled
+      label="Filter"
+    />
         
-        <q-tree
-        :nodes="folders"
-        v-model:selected="selected"
-        selected-color="primary"
-        node-key="name"
-        label-key="name"
-        default-expand-all
-        :filter="filter"
-        @lazy-load="onLazyLoad"
-        />
-    </div>
+    <q-tree
+      v-model:selected="selected"
+      :nodes="folders"
+      selected-color="primary"
+      node-key="name"
+      label-key="name"
+      default-expand-all
+      :filter="filter"
+      @lazy-load="onLazyLoad"
+    />
     <pre>{{ selected }}</pre>
-  </template>
+  </div>
+</template>
   
 
   
