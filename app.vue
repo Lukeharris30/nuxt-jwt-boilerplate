@@ -6,8 +6,28 @@ const u = useUser();
 const appData = useAppStringData();
 
 const loadAppStringData = async () => {
-  const { data: appString } = await useFetch("/api/getAppStringData");
+  const { data: appString, error } = await useFetch("/api/getAppStringData");
+  if (error.value) {
+    console.log("error getting appStringData", error.value);
+  }
   appData.setAppData(appString.value);
+};
+
+const getNewUserLanguage = async function (newLanguage) {
+  let editedUser = JSON.parse(JSON.stringify(u.user));
+  editedUser.language = newLanguage.value;
+  console.log("updating user", editedUser);
+
+  const { data, error } = await useFetch("/api/changeLanguage", {
+    method: "PUT",
+    headers: { "Content-Type": "application/json" },
+    body: editedUser,
+  });
+  if (error.value) console.log("client caught error", error);
+  if (data.value) {
+    console.log("updated user", data);
+    u.setUser(data);
+  }
 };
 
 const userFromStorage = ref(sessionStorage.getItem("userState"));
@@ -42,18 +62,8 @@ watch(
   () => selectedLanguage.value,
   (newVal) => {
     if (u.user) {
-      u.user.language = newVal.value;
-      console.log("updating user", u.user.language);
       // make a new api call to update jwt
-      const { data, error } = useFetch("./api/updateUserLanguage", {
-        method: "PUT",
-        body: u.user,
-      });
-      if (error.value) console.log("client caught error", error);
-      if (data.value) {
-        console.log("updated user", data);
-        u.setUser(data);
-      }
+      getNewUserLanguage(newVal);
     }
   }
 );
