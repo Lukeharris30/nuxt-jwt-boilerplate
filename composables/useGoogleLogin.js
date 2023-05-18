@@ -20,7 +20,7 @@ export const useGoogleLogin = () => {
 
   async function handleGoogleCredentialResponse(response) {
     const token = response.credential;
-    const { data } = await useFetch("/api/getUserAuth", {
+    const { data, error } = await useFetch("/api/getUserAuth", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -28,6 +28,12 @@ export const useGoogleLogin = () => {
       },
       body: token,
     });
+    if (error) {
+      console.error("error", error);
+      throw showError({ statusCode: 500, statusMessage: "User Not Found" });
+      return;
+    }
+
     u.setGoogleUser(data);
 
     if (u.user) {
