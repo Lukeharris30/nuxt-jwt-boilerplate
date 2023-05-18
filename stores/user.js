@@ -1,6 +1,7 @@
 export const useUser = defineStore("user", {
   state: () => ({
     user: ref(null),
+    signinProvider: ref(""),
   }),
 
   getters: {
@@ -51,6 +52,9 @@ export const useUser = defineStore("user", {
     deleteUser() {
       this.user = null;
       sessionStorage.removeItem("userState");
+    },
+    setSigninProvider(provider) {
+      this.signinProvider = provider;
     },
   },
 });

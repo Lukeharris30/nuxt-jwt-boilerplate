@@ -35,6 +35,7 @@ export const useGoogleLogin = () => {
     }
 
     u.setGoogleUser(data);
+    u.setSigninProvider("google");
 
     if (u.user) {
       await navigateTo("/");

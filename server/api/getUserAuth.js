@@ -51,8 +51,6 @@ export default defineEventHandler(async (event) => {
   // create user object with the three sources of data
   if (mulesoftToken && validGoogleUser) {
     user = {
-      ...validGoogleUser,
-      ...mulesoftUser,
       ...mulsoftUserObject,
     };
   }

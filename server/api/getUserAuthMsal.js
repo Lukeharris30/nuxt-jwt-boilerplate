@@ -79,8 +79,6 @@ export default defineEventHandler(async (event) => {
     // create user object with the three sources of data
     if (mulesoftToken && validMsalUser) {
       user = {
-        ...validMsalUser,
-        ...mulesoftUser,
         ...mulsoftUserObject,
       };
     }

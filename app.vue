@@ -36,6 +36,27 @@ const selectedLanguageObject = computed(() => {
       .label;
 });
 const selectedLanguage = ref(selectedLanguageObject.value);
+
+// create a watcher to update the user language
+watch(
+  () => selectedLanguage.value,
+  (newVal) => {
+    if (u.user) {
+      u.user.language = newVal.value;
+      console.log("updating user", u.user.language);
+      // make a new api call to update jwt
+      const { data, error } = useFetch("./api/updateUserLanguage", {
+        method: "PUT",
+        body: u.user,
+      });
+      if (error.value) console.log("client caught error", error);
+      if (data.value) {
+        console.log("updated user", data);
+        u.setUser(data);
+      }
+    }
+  }
+);
 </script>
 
 <template>
@@ -71,7 +92,7 @@ const selectedLanguage = ref(selectedLanguageObject.value);
           </q-item>
           <q-item>
             <q-item-section>
-              <div>
+              <div v-if="u.user">
                 <q-select
                   label-color="white"
                   filled
