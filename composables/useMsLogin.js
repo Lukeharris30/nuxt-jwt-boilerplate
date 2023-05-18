@@ -40,7 +40,7 @@ export const useMsLogin = () => {
           body: token,
         });
 
-        if (error) {
+        if (error.value) {
           console.error("error", error);
           throw showError({ statusCode: 500, statusMessage: "User Not Found" });
           return;
