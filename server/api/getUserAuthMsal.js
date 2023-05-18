@@ -58,7 +58,8 @@ export default defineEventHandler(async (event) => {
 
     // get jwt from mulesoft
     if (validMsalUser) {
-      mulesoftToken = await getUserJwt(validMsalUser.email);
+      console.log("validMsalUser:", validMsalUser.preferred_username);
+      mulesoftToken = await getUserJwt(validMsalUser.preferred_username);
     } else {
       throw new Error(
         "Invalid Microsoft user. Please provide a valid Microsoft user."
