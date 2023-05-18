@@ -9,14 +9,11 @@ export const getUserApi = async (jwt, userEmail, clientId, clientSecret) => {
   };
   console.log(headers);
 
-  const data = await $fetch(
-    `${useRuntimeConfig().mulesoftEndpoint}/user/${userEmail}`,
-    {
-      method: "GET",
-      // bearer token auth
-      headers,
-    }
-  );
+  const data = await $fetch(`${useRuntimeConfig().mulesoftEndpoint}/user`, {
+    method: "GET",
+    // bearer token auth
+    headers,
+  });
 
   return data;
 };

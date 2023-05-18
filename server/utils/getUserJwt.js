@@ -2,10 +2,7 @@ export const getUserJwt = async (userEmail) => {
   // Get user JWT frm Mulesoft
   try {
     let { token } = await $fetch(
-      `${useRuntimeConfig().mulesoftEndpoint}/authorize/${
-        // validGoogleUser.email ||
-        "jwitzke@sram.com"
-      }`,
+      `${useRuntimeConfig().mulesoftEndpoint}/authorize/${userEmail}`,
       {
         method: "GET",
         headers: {

@@ -31,7 +31,7 @@ export const useMsLogin = () => {
       .then(async (response) => {
         // handle response
         const token = response.idToken;
-        const { data } = await useFetch("/api/getUserAuthMsal", {
+        const { data, error } = await useFetch("/api/getUserAuthMsal", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
@@ -39,6 +39,12 @@ export const useMsLogin = () => {
           },
           body: token,
         });
+
+        if (error.value) {
+          console.error("error", error);
+          throw showError({ statusCode: 500, statusMessage: "User Not Found" });
+          return;
+        }
         if (data.value) {
           u.setMsalUser(data);
         }
