@@ -30,6 +30,10 @@ export const useUser = defineStore("user", {
         ...googleAuthUser.value,
       };
       sessionStorage.setItem("userState", JSON.stringify(this.user));
+      sessionStorage.setItem(
+        "signinProvider",
+        JSON.stringify(this.signinProvider)
+      );
     },
     setMsalUser(msalUser) {
       console.log("setting", msalUser);
@@ -45,6 +49,10 @@ export const useUser = defineStore("user", {
         ...msalUser.value,
       };
       sessionStorage.setItem("userState", JSON.stringify(this.user));
+      sessionStorage.setItem(
+        "signinProvider",
+        JSON.stringify(this.signinProvider)
+      );
     },
     setUser(user) {
       this.user = user;

@@ -33,9 +33,8 @@ export const useGoogleLogin = () => {
       throw showError({ statusCode: 401, statusMessage: "User Not Found" });
       return;
     }
-
-    u.setGoogleUser(data);
     u.setSigninProvider("google");
+    u.setGoogleUser(data);
 
     if (u.user) {
       await navigateTo("/");

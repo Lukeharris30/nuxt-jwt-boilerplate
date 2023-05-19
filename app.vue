@@ -34,6 +34,7 @@ const userFromStorage = ref(sessionStorage.getItem("userState"));
 
 if (userFromStorage.value) {
   u.setUser(JSON.parse(userFromStorage.value));
+  u.setSigninProvider(sessionStorage.getItem("signinProvider"));
   if (u.user) {
     // get the latest appData from user
     loadAppStringData();

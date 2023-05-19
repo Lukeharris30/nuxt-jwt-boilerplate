@@ -46,8 +46,8 @@ export const useMsLogin = () => {
           return;
         }
         if (data.value) {
-          u.setMsalUser(data);
           u.setSigninProvider("msal");
+          u.setMsalUser(data);
         }
         if (u.user?.verified) {
           await navigateTo("/");
