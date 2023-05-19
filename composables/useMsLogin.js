@@ -42,7 +42,7 @@ export const useMsLogin = () => {
 
         if (error.value) {
           console.error("error", error);
-          throw showError({ statusCode: 500, statusMessage: "User Not Found" });
+          throw showError({ statusCode: 401, statusMessage: "User Not Found" });
           return;
         }
         if (data.value) {
