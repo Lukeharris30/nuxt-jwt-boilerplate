@@ -1,4 +1,4 @@
-export const getUserApi = async (jwt, userEmail, clientId, clientSecret) => {
+export const getUserApi = async (jwt, clientId, clientSecret) => {
   // call mulesoft api to get user info
   // const runtimeConfig = useRuntimeConfig();
   const headers = {

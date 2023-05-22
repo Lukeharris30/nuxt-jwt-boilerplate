@@ -16,25 +16,28 @@ const loadAppStringData = async () => {
 const getNewUserLanguage = async function (newLanguage) {
   let editedUser = JSON.parse(JSON.stringify(u.user));
   editedUser.language = newLanguage.value;
-  console.log("updating user", editedUser);
 
-  const { data, error } = await useFetch("/api/changeLanguage", {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    body: editedUser,
-  });
-  if (error.value) console.log("client caught error", error);
-  if (data.value) {
-    console.log("updated user", data);
-    u.setUser(data);
+  try {
+    const { data, error } = await useFetch("/api/changeLanguage", {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(editedUser),
+    });
+    if (!error.value) {
+      u.setUser(editedUser);
+      console.log("user updated", u.user);
+    }
+  } catch (error) {
+    if (error.value) console.log("client caught error", error.value);
   }
 };
 
 const userFromStorage = ref(sessionStorage.getItem("userState"));
+const signinProvider = ref(sessionStorage.getItem("signinProvider"));
 
 if (userFromStorage.value) {
   u.setUser(JSON.parse(userFromStorage.value));
-  u.setSigninProvider(sessionStorage.getItem("signinProvider"));
+  u.setSigninProvider(JSON.parse(signinProvider.value));
   if (u.user) {
     // get the latest appData from user
     loadAppStringData();
@@ -48,13 +51,11 @@ u.$subscribe((mutation, state) => {
     loadAppStringData();
   }
 });
-
+// re-fetch all the data
 const selectedLanguageObject = computed(() => {
-  if (!appData.languageOptions || !u.user?.language)
-    return { label: "English", value: "en" };
-  else
-    return appData.languageOptions.find((l) => l.value === u.user?.language)
-      .label;
+  if (appData.languageOptions && u.user) {
+    return appData.languageOptions?.find((l) => l.value === u.user?.language);
+  } else return null;
 });
 const selectedLanguage = ref(selectedLanguageObject.value);
 
@@ -77,7 +78,7 @@ watch(
         <q-toolbar-title>
           <div class="column justify-between">
             <SramLogo color="#e51937" width="200" />
-            <div class="q-ml-lg">{{ appData.appData?.pageHeader?.header }}</div>
+            <div class="q-ml-lg">{{ appData.appData?.pageHeader }}</div>
           </div>
         </q-toolbar-title>
         <div class="column justify-between">
@@ -114,7 +115,7 @@ watch(
                   outlined
                   v-model="selectedLanguage"
                   :options="appData.languageOptions"
-                  :label="selectedLanguageObject.label"
+                  :label="selectedLanguageObject?.label || 'language'"
                 />
               </div>
             </q-item-section>
@@ -145,7 +146,7 @@ watch(
       <q-toolbar>
         <q-toolbar-title>
           <SramLogo color="#fff" width="100" />
-          <div>{{ appData.appData?.pagefooter?.footer }}</div>
+          <div>{{ appData.appData?.pageFooter }}</div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>

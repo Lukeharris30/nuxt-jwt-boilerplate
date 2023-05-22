@@ -7,26 +7,18 @@ export const useUser = defineStore("user", {
   getters: {
     isAuthenticated(state) {
       if (state && state.user) {
-        return state.user.verified;
+        return !!state.user.email;
       }
       return false;
     },
   },
 
   actions: {
-    setGoogleUser(googleAuthUser, callback) {
+    setGoogleUser(googleAuthUser) {
       console.log("setting", googleAuthUser);
       this.user = {
-        name: googleAuthUser.value.name,
         email: googleAuthUser.value.email,
-        imageUrl: googleAuthUser.value.picture,
-        iat: googleAuthUser.value.iat,
-        exp: googleAuthUser.value.exp,
-        isAdmin: googleAuthUser.value.isAdmin,
-        verified: googleAuthUser.value.email_verified,
-        userType: "google",
-        language: googleAuthUser.value.language,
-        spEmail: googleAuthUser.value.email,
+
         ...googleAuthUser.value,
       };
       sessionStorage.setItem("userState", JSON.stringify(this.user));
@@ -38,14 +30,7 @@ export const useUser = defineStore("user", {
     setMsalUser(msalUser) {
       console.log("setting", msalUser);
       this.user = {
-        name: msalUser.value.name,
         email: msalUser.value.preferred_username,
-        imageUrl: msalUser.value.picture || "",
-        iat: msalUser.value.iat,
-        exp: msalUser.value.exp,
-        isAdmin: true,
-        verified: true,
-        userType: "msal",
         ...msalUser.value,
       };
       sessionStorage.setItem("userState", JSON.stringify(this.user));
@@ -55,7 +40,9 @@ export const useUser = defineStore("user", {
       );
     },
     setUser(user) {
+      console.log("setting", this.user);
       this.user = user;
+      sessionStorage.setItem("userState", JSON.stringify(user));
     },
     deleteUser() {
       this.user = null;
