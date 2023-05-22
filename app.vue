@@ -74,15 +74,13 @@ watch(
 
 <template>
   <q-layout view="hHh lpR fff">
-    <q-header class="bg-dark text-white" height-hint="98">
-      <q-toolbar class="q-pt-lg">
+    <q-header class="bg-dark text-white row" height-hint="98">
+      <q-toolbar class="">
         <q-toolbar-title>
-          <div class="column justify-between">
-            <SramLogo color="#e51937" width="200" />
-            <div class="q-ml-lg">{{ appData.appData?.pageHeader }}</div>
-          </div>
+          <SramLogo color="#e51937" width="200" />
         </q-toolbar-title>
-        <div class="column justify-between">
+        <!-- <q-space /> -->
+        <div class="column justify-between user-area">
           <q-item v-if="u.user">
             <q-item-section side>
               <q-avatar v-if="u.user?.imageUrl" square size="40px">
@@ -117,11 +115,20 @@ watch(
                   v-model="selectedLanguage"
                   :options="appData.languageOptions"
                   :label="selectedLanguageObject?.label || 'language'"
-                />
+                >
+                  <template v-slot:prepend>
+                    <q-icon name="translate" @click.stop.prevent /> </template
+                ></q-select>
               </div>
             </q-item-section>
           </q-item>
         </div>
+      </q-toolbar>
+      <q-toolbar class="">
+        <div
+          class="col-9 header-text"
+          v-html="appData.appData?.pageHeader"
+        ></div>
       </q-toolbar>
       <q-tabs align="left">
         <q-route-tab
@@ -147,9 +154,27 @@ watch(
       <q-toolbar>
         <q-toolbar-title>
           <SramLogo color="#fff" width="100" />
-          <div>{{ appData.appData?.pageFooter }}</div>
+          <div class="footer-text" v-html="appData.appData?.pageFooter"></div>
         </q-toolbar-title>
       </q-toolbar>
     </q-footer>
   </q-layout>
 </template>
+
+<style>
+.user-area {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+}
+.footer-text {
+  font-size: 0.7em;
+  color: #c5c4c4;
+}
+.footer-text a {
+  color: white;
+}
+.header-text {
+  color: #c5c4c4;
+}
+</style>
