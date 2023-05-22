@@ -15,7 +15,7 @@ export const useAppStringData = defineStore("appStringData", {
             return {
               display: item.display,
               action: action,
-              path: action === "file" ? "/" : `/${action}`,
+              path: action === "files" ? "/" : `/${action}`,
             };
           })
           .filter((item) => item.action !== "logout");

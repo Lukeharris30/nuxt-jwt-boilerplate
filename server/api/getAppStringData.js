@@ -17,7 +17,6 @@ export default defineEventHandler(async (event) => {
         headers: event.node.req.headers,
       }),
     ]);
-    console.log({ nav, pageHeader, pageFooter, locales });
     return { nav, pageHeader, pageFooter, locales };
   } catch (error) {
     console.error("Error occurred:", error);

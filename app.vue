@@ -14,6 +14,7 @@ const loadAppStringData = async () => {
 };
 
 const getNewUserLanguage = async function (newLanguage) {
+  console.log("getNewUserLanguage", newLanguage);
   let editedUser = JSON.parse(JSON.stringify(u.user));
   editedUser.language = newLanguage.value;
 
@@ -57,7 +58,7 @@ const selectedLanguageObject = computed(() => {
     return appData.languageOptions?.find((l) => l.value === u.user?.language);
   } else return null;
 });
-const selectedLanguage = ref(selectedLanguageObject.value);
+const selectedLanguage = ref(null);
 
 // create a watcher to update the user language
 watch(
