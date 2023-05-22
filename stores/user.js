@@ -1,44 +1,55 @@
-export const useUser = defineStore('user', {
+export const useUser = defineStore("user", {
   state: () => ({
-    user: ref(null)
+    user: ref(null),
+    signinProvider: ref(""),
   }),
 
   getters: {
     isAuthenticated(state) {
-      if(state && state.user){
-        return state.user.verified
+      if (state && state.user) {
+        return !!state.user.email;
       }
-      return false
+      return false;
     },
-    userName(state) {
-      return state.user.name
-    }
   },
 
   actions: {
     setGoogleUser(googleAuthUser) {
-      console.log('setting', googleAuthUser)
+      console.log("setting", googleAuthUser);
       this.user = {
-        name: googleAuthUser.value.name,
         email: googleAuthUser.value.email,
-        imageUrl: googleAuthUser.value.picture,
-        iat: googleAuthUser.value.iat,
-        exp: googleAuthUser.value.exp,
-        isAdmin: true,
-        verified: googleAuthUser.value.email_verified
-      }
+
+        ...googleAuthUser.value,
+      };
+      sessionStorage.setItem("userState", JSON.stringify(this.user));
+      sessionStorage.setItem(
+        "signinProvider",
+        JSON.stringify(this.signinProvider)
+      );
     },
     setMsalUser(msalUser) {
-      console.log('setting', msalUser)
+      console.log("setting", msalUser);
       this.user = {
-        name: msalUser.value.name,
         email: msalUser.value.preferred_username,
-        imageUrl: msalUser.value.picture || '',
-        iat: msalUser.value.iat,
-        exp: msalUser.value.exp,
-        isAdmin: true,
-        verified: true
-      }
-    }
-  }
-})
+        ...msalUser.value,
+      };
+      sessionStorage.setItem("userState", JSON.stringify(this.user));
+      sessionStorage.setItem(
+        "signinProvider",
+        JSON.stringify(this.signinProvider)
+      );
+    },
+    setUser(user) {
+      console.log("setting", this.user);
+      this.user = user;
+      sessionStorage.setItem("userState", JSON.stringify(user));
+    },
+    deleteUser() {
+      this.user = null;
+      sessionStorage.removeItem("userState");
+    },
+    setSigninProvider(provider) {
+      this.signinProvider = provider;
+    },
+  },
+});

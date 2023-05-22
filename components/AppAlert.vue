@@ -1,15 +1,13 @@
 <template>
-<span class="app-alert">
+  <span class="app-alert">
     <slot />
-</span>
+  </span>
 </template>
 
-  <style >
-  .app-alert {
-    background: gray;
-    color: #fff;
-    padding: 1rem;
-
-  }
-  
-  </style>
+<style>
+.app-alert {
+  background: gray;
+  color: #fff;
+  padding: 1rem;
+}
+</style>

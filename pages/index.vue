@@ -1,10 +1,9 @@
 <script setup>
 definePageMeta({
-  middleware: 'auth'
-})
+  middleware: "auth",
+});
 </script>
 
 <template>
-    <h1>Home</h1>
-    <FolderTree></FolderTree>
+  <FolderTree />
 </template>

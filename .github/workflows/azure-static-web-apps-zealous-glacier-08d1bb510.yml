@@ -36,6 +36,8 @@ jobs:
           NUXT_GOOGLE_SECRET: ${{ secrets.NUXT_GOOGLE_SECRET}}
           NUXT_MICROSOFT_TENANT_ID: ${{ secrets.NUXT_MICROSOFT_TENANT_ID}}
           NUXT_MICROSOFT_CLIENT_ID: ${{ secrets.NUXT_MICROSOFT_CLIENT_ID}}
+          NUXT_MULESOFT_CLIENT_ID: ${{ secrets.NUXT_MULESOFT_CLIENT_ID}}
+          NUXT_MULESOFT_CLIENT_SECRET: ${{ secrets.NUXT_MULESOFT_CLIENT_SECRET}}
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
