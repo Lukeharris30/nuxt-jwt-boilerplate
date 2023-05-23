@@ -6,6 +6,7 @@ const selected = ref("U1JBTUNvbW1vbi9Gb3Jtcw==");
 const splitterModel = 50;
 
 let selectedFolderTreeItem = ref(null);
+const selectedFolderTreeFolders = ref([]);
 // get files from the server
 let { data: root, error } = await useFetch("/api/getFiles");
 if (error.value) {
@@ -21,24 +22,13 @@ const mappedRoot = computed(() => {
     return root.value.folders.map((f) => ({
       key: f.key,
       label: f.display,
+      lazy: true,
       icon: "folder",
       children: [],
     }));
   }
   return [];
 });
-
-// const mappedFiles = computed(() => {
-//   if (selectedTree.value) {
-//     return selectedTree.value;
-//     // ?.map((f) => ({
-//     //   key: f.key,
-//     //   label: f.display,
-//     //   // icon: "document",
-//     //   children: [],
-//     // }));
-//   }
-// });
 
 // getFilesByFolder
 const {
@@ -63,23 +53,36 @@ const {
         icon: "description",
         children: [],
       }));
-      const folders = selectedFolderTree.folders.map((f) => ({
+      selectedFolderTreeFolders.value = selectedFolderTree.folders.map((f) => ({
         key: f.key,
         label: f.display,
         icon: "folder",
         children: [],
       }));
-      return folders.concat(files);
+      return files;
     },
   }
 );
 watch(selected, (newValue) => {
+  selectedFolderTreeFolders.value = [];
   refresh();
 });
 
 if (selectedFolderError) {
   console.log("error getting files", selectedFolderError);
 }
+
+const onLazyLoad = function (node, key, done, fail) {
+  console.log("onLazyLoad");
+  // append selectedFolderTreeFolders to root
+  // find selectd in root
+  const selectedFolder = root.value.folders.find(
+    (f) => f.key === selected.value
+  );
+  if (selectedFolder) {
+    selectedFolder.children = selectedFolderTreeFolders.value;
+  }
+};
 </script>
 
 <template>
@@ -94,15 +97,15 @@ if (selectedFolderError) {
         ></q-tree>
       </template>
       <template v-slot:after>
-        <div>{{ selectedFolderTreeItem }}</div>
+        <div>{{ selectedFolderTreeFolders }}</div>
         <div v-if="pending">pending</div>
-
         <q-tree
           v-else
           :nodes="selectedFolderTree || []"
           node-key="key"
           node-label="label"
           v-model:selected="selectedFolderTreeItem"
+          @lazy-load="onLazyLoad"
         >
         </q-tree>
       </template>

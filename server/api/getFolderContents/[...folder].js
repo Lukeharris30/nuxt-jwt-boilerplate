@@ -11,7 +11,6 @@ export default defineEventHandler(async (event) => {
     const response = await $fetch(`${endpoint}/file/list/${folder}`, {
       headers: event.node.req.headers,
     });
-    console.log("filesByfolder", response);
     return response;
   } catch (error) {
     console.error("Error occurred:", error);
