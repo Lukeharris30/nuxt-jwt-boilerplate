@@ -15,7 +15,7 @@ export const useUser = defineStore("user", {
 
   actions: {
     setGoogleUser(googleAuthUser) {
-      console.log("setting", googleAuthUser);
+      console.log("setting google user", googleAuthUser);
       this.user = {
         email: googleAuthUser.value.email,
 
@@ -28,7 +28,7 @@ export const useUser = defineStore("user", {
       );
     },
     setMsalUser(msalUser) {
-      console.log("setting", msalUser);
+      console.log("settingMsal user", msalUser);
       this.user = {
         email: msalUser.value.preferred_username,
         ...msalUser.value,
@@ -40,7 +40,7 @@ export const useUser = defineStore("user", {
       );
     },
     setUser(user) {
-      console.log("setting", this.user);
+      console.log("setting user", this.user);
       this.user = user;
       sessionStorage.setItem("userState", JSON.stringify(user));
     },

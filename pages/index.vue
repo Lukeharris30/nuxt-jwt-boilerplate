@@ -1,34 +1,15 @@
 <script setup>
+import { useGetFolders } from "../composables/useGetFolders";
 definePageMeta({
   middleware: "auth",
 });
-const selected = ref("U1JBTUNvbW1vbi9Gb3Jtcw==");
+
 const splitterModel = 50;
 
 let selectedFolderTreeItem = ref(null);
 const selectedFolderTreeFolders = ref([]);
-// get files from the server
-let { data: root, error } = await useFetch("/api/getFiles");
-if (error.value) {
-  console.log("error getting files", error.value);
-  if (error.value) {
-    console.log(error.value.status);
-    await navigateTo("/login");
-  }
-}
 
-const mappedRoot = computed(() => {
-  if (root.value?.folders?.length > 0) {
-    return root.value.folders.map((f) => ({
-      key: f.key,
-      label: f.display,
-      lazy: true,
-      icon: "folder",
-      children: [],
-    }));
-  }
-  return [];
-});
+const { mappedRoot, root, selectedFolder } = await useGetFolders();
 
 // getFilesByFolder
 const {
@@ -39,9 +20,9 @@ const {
 } = await useLazyAsyncData(
   "selectedFolderTree",
   () =>
-    $fetch(`/api/getFolderContents/${selected.value}`, {
+    $fetch(`/api/getFolderContents/${selectedFolder.value}`, {
       params: {
-        folder: selected.value,
+        folder: selectedFolder.value,
       },
       immediate: false,
     }),
@@ -63,7 +44,7 @@ const {
     },
   }
 );
-watch(selected, (newValue) => {
+watch(selectedFolder, (newValue) => {
   selectedFolderTreeFolders.value = [];
   refresh();
 });
@@ -76,8 +57,8 @@ const onLazyLoad = function (node, key, done, fail) {
   console.log("onLazyLoad");
   // append selectedFolderTreeFolders to root
   // find selectd in root
-  const selectedFolder = root.value.folders.find(
-    (f) => f.key === selected.value
+  const selectedFolderFromRoot = root.value.folders.find(
+    (f) => f.key === selectedFolder.value
   );
   if (selectedFolder) {
     selectedFolder.children = selectedFolderTreeFolders.value;
@@ -93,7 +74,7 @@ const onLazyLoad = function (node, key, done, fail) {
           :nodes="mappedRoot || []"
           selected-color="primary"
           node-key="key"
-          v-model:selected="selected"
+          v-model:selected="selectedFolder"
         ></q-tree>
       </template>
       <template v-slot:after>
