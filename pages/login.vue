@@ -31,11 +31,11 @@ const u = useUser();
       </div>
     </div>
     <div v-show="u.user" class="q-pa-md q-gutter-sm column-inline items-center">
-      <q-btn v-if="u?.user?.userType === 'msal'" @click="msalLogout">
+      <q-btn v-if="u?.signinProvider === 'msal'" @click="msalLogout">
         Logout
       </q-btn>
       <q-btn
-        v-show="u?.user?.userType === 'google'"
+        v-show="u?.signinProvider === 'google'"
         id="logoutGoogle"
         class="g_id_signout"
         @click="logoutGoogle"

@@ -7,7 +7,7 @@ export default defineEventHandler(async (event) => {
     useRuntimeConfig().mulesoftClientSecret;
   const endpoint = useRuntimeConfig().mulesoftEndpoint;
   try {
-    const [nav, pagefooter, pageHeader, locales] = await Promise.all([
+    let [nav, pageFooter, pageHeader, locales] = await Promise.all([
       $fetch(`${endpoint}/content/actions`, {
         headers: event.node.req.headers,
       }),
@@ -17,8 +17,7 @@ export default defineEventHandler(async (event) => {
         headers: event.node.req.headers,
       }),
     ]);
-
-    return { nav, pageHeader, pagefooter, locales };
+    return { nav, pageHeader, pageFooter, locales };
   } catch (error) {
     console.error("Error occurred:", error);
   }
