@@ -88,13 +88,9 @@ const onLazyLoad = function ({ node, key, done, fail }) {
               <q-item-section avatar>
                 <q-skeleton type="QIcon" />
               </q-item-section>
-
               <q-item-section>
                 <q-item-label>
                   <q-skeleton type="text" />
-                </q-item-label>
-                <q-item-label caption>
-                  <q-skeleton type="text" width="65%" />
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -103,13 +99,9 @@ const onLazyLoad = function ({ node, key, done, fail }) {
               <q-item-section avatar>
                 <q-skeleton type="QIcon" />
               </q-item-section>
-
               <q-item-section>
                 <q-item-label>
                   <q-skeleton type="text" />
-                </q-item-label>
-                <q-item-label caption>
-                  <q-skeleton type="text" width="90%" />
                 </q-item-label>
               </q-item-section>
             </q-item>
@@ -118,13 +110,9 @@ const onLazyLoad = function ({ node, key, done, fail }) {
               <q-item-section avatar>
                 <q-skeleton type="QIcon" />
               </q-item-section>
-
               <q-item-section>
                 <q-item-label>
                   <q-skeleton type="text" width="35%" />
-                </q-item-label>
-                <q-item-label caption>
-                  <q-skeleton type="text" />
                 </q-item-label>
               </q-item-section>
             </q-item>
