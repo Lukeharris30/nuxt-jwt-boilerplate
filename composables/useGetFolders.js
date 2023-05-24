@@ -7,7 +7,7 @@ export const useGetFolders = async () => {
   const selectedFolder = ref("");
 
   // get folders from the server
-  let { data: root, error } = await useFetch("/api/getFiles");
+  let { data: folderRoot, error } = await useFetch("/api/getFiles");
   if (error.value !== null) {
     console.log(
       "caught authentication error, deleting user",
@@ -19,8 +19,8 @@ export const useGetFolders = async () => {
   }
 
   const mappedRoot = computed(() => {
-    if (root.value?.folders?.length > 0) {
-      return root.value?.folders.map((f) => ({
+    if (folderRoot.value?.folders?.length > 0) {
+      return folderRoot.value?.folders.map((f) => ({
         key: f.key,
         label: f.display,
         lazy: true,
@@ -31,5 +31,5 @@ export const useGetFolders = async () => {
     return [];
   });
 
-  return { mappedRoot, root, selectedFolder };
+  return { mappedRoot, folderRoot, selectedFolder };
 };

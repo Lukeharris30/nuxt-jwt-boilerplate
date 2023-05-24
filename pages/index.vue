@@ -9,7 +9,7 @@ const splitterModel = 50;
 let selectedFolderTreeItem = ref(null);
 const selectedFolderTreeFolders = ref([]);
 
-const { mappedRoot, root, selectedFolder } = await useGetFolders();
+const { mappedRoot, folderRoot, selectedFolder } = await useGetFolders();
 
 // getFilesByFolder
 const {
@@ -45,12 +45,11 @@ const {
     },
   }
 );
+
 watch(selectedFolder, (newValue) => {
   selectedFolderTreeFolders.value = [];
   refresh();
 });
-
-const expanded = ref([]);
 
 if (selectedFolderError.value) {
   console.log("error getting files", selectedFolderError);
@@ -83,7 +82,54 @@ const onLazyLoad = function ({ node, key, done, fail }) {
         ></q-tree>
       </template>
       <template v-slot:after>
-        <div v-if="pending">pending</div>
+        <div v-if="pending">
+          <div class="q-pa-md">
+            <q-item style="max-width: 300px">
+              <q-item-section avatar>
+                <q-skeleton type="QIcon" />
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label>
+                  <q-skeleton type="text" />
+                </q-item-label>
+                <q-item-label caption>
+                  <q-skeleton type="text" width="65%" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item style="max-width: 300px">
+              <q-item-section avatar>
+                <q-skeleton type="QIcon" />
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label>
+                  <q-skeleton type="text" />
+                </q-item-label>
+                <q-item-label caption>
+                  <q-skeleton type="text" width="90%" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+
+            <q-item style="max-width: 300px">
+              <q-item-section avatar>
+                <q-skeleton type="QIcon" />
+              </q-item-section>
+
+              <q-item-section>
+                <q-item-label>
+                  <q-skeleton type="text" width="35%" />
+                </q-item-label>
+                <q-item-label caption>
+                  <q-skeleton type="text" />
+                </q-item-label>
+              </q-item-section>
+            </q-item>
+          </div>
+        </div>
         <q-tree
           v-else
           :nodes="selectedFolderTree || []"
@@ -91,7 +137,6 @@ const onLazyLoad = function ({ node, key, done, fail }) {
           node-label="label"
           default-expand-all
           v-model:selected="selectedFolderTreeItem"
-          v-model:expanded="expanded"
         >
         </q-tree>
       </template>
