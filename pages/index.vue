@@ -66,6 +66,19 @@ const onLazyLoad = function ({ node, key, done, fail }) {
     }
   }, 100);
 };
+
+const downloadFile = async function () {
+  console.log("downloadFile", selectedFolderTreeItem.value);
+  const response = await $fetch(
+    `/api/getFile/${selectedFolderTreeItem.value}`,
+    {
+      params: {
+        file: selectedFolderTreeItem.value,
+      },
+    }
+  );
+  console.log(response);
+};
 </script>
 
 <template>
@@ -86,7 +99,7 @@ const onLazyLoad = function ({ node, key, done, fail }) {
           <div class="q-pa-md">
             <q-item style="max-width: 300px">
               <q-item-section avatar>
-                <q-skeleton type="QIcon" />
+                <q-skeleton size="20px" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
@@ -97,7 +110,7 @@ const onLazyLoad = function ({ node, key, done, fail }) {
 
             <q-item style="max-width: 300px">
               <q-item-section avatar>
-                <q-skeleton type="QIcon" />
+                <q-skeleton size="20px" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
@@ -108,7 +121,7 @@ const onLazyLoad = function ({ node, key, done, fail }) {
 
             <q-item style="max-width: 300px">
               <q-item-section avatar>
-                <q-skeleton type="QIcon" />
+                <q-skeleton size="20px" />
               </q-item-section>
               <q-item-section>
                 <q-item-label>
@@ -125,6 +138,7 @@ const onLazyLoad = function ({ node, key, done, fail }) {
           node-label="label"
           default-expand-all
           v-model:selected="selectedFolderTreeItem"
+          @click="downloadFile(selectedFolderTreeItem)"
         >
         </q-tree>
       </template>
