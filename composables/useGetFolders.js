@@ -1,13 +1,21 @@
+import { useUser } from "../stores/user.js";
+import { useAppStringData } from "../stores/appStringData.js";
+
 export const useGetFolders = async () => {
-  const selectedFolder = ref("U1JBTUNvbW1vbi9Gb3Jtcw==");
+  const { deleteUser } = useUser();
+  const { deleteAppData } = useAppStringData();
+  const selectedFolder = ref("");
+
   // get folders from the server
   let { data: root, error } = await useFetch("/api/getFiles");
   if (error.value !== null) {
-    console.log("error getting files", error.value);
-    if (error.value) {
-      console.log(error.value.status);
-      await navigateTo("/login");
-    }
+    console.log(
+      "caught authentication error, deleting user",
+      error.value.statusCode
+    );
+    deleteUser();
+    deleteAppData();
+    await navigateTo("/login");
   }
 
   const mappedRoot = computed(() => {
@@ -22,5 +30,6 @@ export const useGetFolders = async () => {
     }
     return [];
   });
+
   return { mappedRoot, root, selectedFolder };
 };

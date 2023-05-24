@@ -38,6 +38,7 @@ const {
         key: f.key,
         label: f.display,
         icon: "folder",
+        lazy: true,
         children: [],
       }));
       return files;
@@ -49,20 +50,22 @@ watch(selectedFolder, (newValue) => {
   refresh();
 });
 
-if (selectedFolderError) {
+const expanded = ref([]);
+
+if (selectedFolderError.value) {
   console.log("error getting files", selectedFolderError);
 }
 
-const onLazyLoad = function (node, key, done, fail) {
-  console.log("onLazyLoad");
-  // append selectedFolderTreeFolders to root
-  // find selectd in root
-  const selectedFolderFromRoot = root.value.folders.find(
-    (f) => f.key === selectedFolder.value
-  );
-  if (selectedFolder) {
-    selectedFolder.children = selectedFolderTreeFolders.value;
-  }
+const onLazyLoad = function ({ node, key, done, fail }) {
+  selectedFolder.value = key;
+
+  // create a promise to resolve when pending is false
+  const interval = setInterval(() => {
+    if (!pending.value) {
+      clearInterval(interval);
+      done(selectedFolderTreeFolders.value);
+    }
+  }, 100);
 };
 </script>
 
@@ -73,20 +76,22 @@ const onLazyLoad = function (node, key, done, fail) {
         <q-tree
           :nodes="mappedRoot || []"
           selected-color="primary"
+          expandable
           node-key="key"
           v-model:selected="selectedFolder"
+          @lazy-load="onLazyLoad"
         ></q-tree>
       </template>
       <template v-slot:after>
-        <div>{{ selectedFolderTreeFolders }}</div>
         <div v-if="pending">pending</div>
         <q-tree
           v-else
           :nodes="selectedFolderTree || []"
           node-key="key"
           node-label="label"
+          default-expand-all
           v-model:selected="selectedFolderTreeItem"
-          @lazy-load="onLazyLoad"
+          v-model:expanded="expanded"
         >
         </q-tree>
       </template>
