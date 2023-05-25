@@ -4,7 +4,7 @@ definePageMeta({
   middleware: "auth",
 });
 
-const splitterModel = 50;
+const splitterModel = ref(50);
 
 let selectedFolderTreeItem = ref(null);
 const selectedFolderTreeFolders = ref([]);
