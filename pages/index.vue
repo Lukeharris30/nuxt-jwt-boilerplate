@@ -51,8 +51,11 @@ watch(selectedFolder, (newValue) => {
   refresh();
 });
 
-if (selectedFolderError.value) {
+if (selectedFolderError?.value?.statusCode === 401) {
   console.log("error getting files", selectedFolderError);
+  deleteUser();
+  deleteAppData();
+  await navigateTo("/login");
 }
 
 const onLazyLoad = function ({ node, key, done, fail }) {
@@ -68,16 +71,27 @@ const onLazyLoad = function ({ node, key, done, fail }) {
 };
 
 const downloadFile = async function () {
-  console.log("downloadFile", selectedFolderTreeItem.value);
-  const response = await $fetch(
-    `/api/getFile/${selectedFolderTreeItem.value}`,
-    {
-      params: {
-        file: selectedFolderTreeItem.value,
-      },
-    }
-  );
-  console.log(response);
+  console.log("get the file");
+  // console.log("downloadFile", selectedFolderTreeItem.value);
+  // const response = await $fetch(
+  //   `/api/getFile/${selectedFolderTreeItem.value}`,
+  //   {
+  //     params: {
+  //       file: selectedFolderTreeItem.value,
+  //     },
+  //   }
+  // );
+
+  // console.log("response", response);
+  // const type = response.type;
+  // console.log(type);
+
+  // let blob = new Blob([response], { type });
+  // let url = URL.createObjectURL(blob);
+  // let link = document.createElement("a");
+  // link.href = url;
+  // link.download = selectedFolderTreeItem.value;
+  // link.click();
 };
 </script>
 
