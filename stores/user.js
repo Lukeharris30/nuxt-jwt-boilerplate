@@ -47,6 +47,7 @@ export const useUser = defineStore("user", {
     deleteUser() {
       this.user = null;
       sessionStorage.removeItem("userState");
+      sessionStorage.removeItem("signinProvider");
     },
     setSigninProvider(provider) {
       this.signinProvider = provider;
