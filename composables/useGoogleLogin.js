@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { useUser } from "~/stores/user";
 import { useAppStringData } from "~/stores/appStringData";
 
