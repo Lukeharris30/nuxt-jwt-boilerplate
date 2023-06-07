@@ -1,6 +1,7 @@
 <script setup>
 import { useGetFolders } from "../composables/useGetFolders";
 import { useUser } from "../stores/user";
+import { useAppStringData } from "~/stores/appStringData";
 definePageMeta({
   middleware: "auth",
 });
@@ -9,18 +10,19 @@ const splitterModel = ref(50);
 
 let selectedFolderTreeItem = ref(null);
 const selectedFolderTreeFolders = ref([]);
+// let selectedFolderTreeError = ref(null);
 
 const { deleteUser } = useUser();
-const { mappedRoot, folderRoot, selectedFolder, deleteAppData } =
-  await useGetFolders();
+const { mappedRoot, selectedFolder } = await useGetFolders();
+const { deleteAppData } = useAppStringData();
 
 // getFilesByFolder
 const {
   pending,
   data: selectedFolderTree,
-  error: selectedFolderError,
+  error: selectedFolderTreeError,
   refresh,
-} = await useLazyAsyncData(
+} = await useAsyncData(
   "selectedFolderTree",
   () =>
     $fetch(`/api/getFolderContents/${selectedFolder.value}`, {
@@ -54,13 +56,21 @@ watch(selectedFolder, (newValue) => {
   refresh();
 });
 
-if (selectedFolderError?.value?.statusCode === 401) {
-  console.log("error getting files", selectedFolderError);
-  deleteUser();
-  deleteAppData();
-  await navigateTo("/login");
-}
+// watch the error from the folder tree and delete user if it is a 401
+watch(selectedFolderTreeError, async (newValue) => {
+  if (newValue?.statusCode === 401) {
+    console.log(
+      "watcher: unauthorized error getting files by Folder, removing user",
+      newValue,
+      newValue?.statusCode
+    );
+    deleteUser();
+    deleteAppData();
+    await navigateTo("/login");
+  }
+});
 
+// append folder tree to selected folder
 const onLazyLoad = function ({ node, key, done, fail }) {
   selectedFolder.value = key;
 
@@ -73,28 +83,53 @@ const onLazyLoad = function ({ node, key, done, fail }) {
   }, 100);
 };
 
+const selectedFileObject = computed(() => {
+  if (!selectedFolderTreeItem.value) return null;
+  return selectedFolderTree.value.find(
+    (f) => f.key === selectedFolderTreeItem.value
+  );
+});
+
 const downloadFile = async function () {
-  console.log("get the file");
-  // console.log("downloadFile", selectedFolderTreeItem.value);
-  // const response = await $fetch(
-  //   `/api/getFile/${selectedFolderTreeItem.value}`,
-  //   {
-  //     params: {
-  //       file: selectedFolderTreeItem.value,
-  //     },
-  //   }
-  // );
+  // check for null
+  if (!selectedFolderTreeItem.value) return;
 
-  // console.log("response", response);
-  // const type = response.type;
-  // console.log(type);
+  const { data: blob, error: fileError } = await useAsyncData("file", () =>
+    $fetch(`/api/getFile/${selectedFolderTreeItem.value}`, {
+      params: {
+        file: selectedFolderTreeItem.value,
+      },
+      responseType: "blob",
+    })
+  );
+  if (fileError.value) {
+    console.log("caught file error", fileError.value);
+    if (fileError.value.statusCode === 401) {
+      console.log("caught file error, unauthorized 401");
+      deleteUser();
+      deleteAppData();
+      await navigateTo("/login");
+    }
+  } else {
+    // Assume blob is the Blob object you have
+    const url = URL.createObjectURL(blob.value);
 
-  // let blob = new Blob([response], { type });
-  // let url = URL.createObjectURL(blob);
-  // let link = document.createElement("a");
-  // link.href = url;
-  // link.download = selectedFolderTreeItem.value;
-  // link.click();
+    // Create a temporary link element
+    const link = document.createElement("a");
+    link.href = url;
+
+    // Specify the name for the downloaded file
+    link.download = selectedFileObject.value.label; // Replace 'output.file' with the appropriate file name
+
+    // Append the link to the body
+    document.body.appendChild(link);
+
+    // Trigger the download by simulating a click on the link
+    link.click();
+
+    // Remove the link from the body
+    document.body.removeChild(link);
+  }
 };
 </script>
 
@@ -156,6 +191,7 @@ const downloadFile = async function () {
           default-expand-all
           v-model:selected="selectedFolderTreeItem"
           @click="downloadFile(selectedFolderTreeItem)"
+          selected-color="primary"
         >
         </q-tree>
       </template>

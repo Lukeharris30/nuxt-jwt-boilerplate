@@ -13,8 +13,7 @@ export default defineEventHandler(async (event) => {
     });
     return response;
   } catch (error) {
-    console.error("Error occurred:", error);
-    return error;
-    // throw new Error(error);
+    console.error("Error occurred: getting folder", error);
+    throw createError(error);
   }
 });
