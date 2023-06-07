@@ -8,7 +8,6 @@ export const useGetFolders = async () => {
 
   // get folders from the server
   let { data: folderRoot, error } = await useFetch("/api/getFiles");
-  console.log("err", error, error.value);
   if (error.value !== null) {
     console.log(
       "caught authentication error, deleting user",
