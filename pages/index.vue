@@ -1,5 +1,6 @@
 <script setup>
 import { useGetFolders } from "../composables/useGetFolders";
+import { useUser } from "../stores/user";
 definePageMeta({
   middleware: "auth",
 });
@@ -9,7 +10,9 @@ const splitterModel = ref(50);
 let selectedFolderTreeItem = ref(null);
 const selectedFolderTreeFolders = ref([]);
 
-const { mappedRoot, folderRoot, selectedFolder } = await useGetFolders();
+const { deleteUser } = useUser();
+const { mappedRoot, folderRoot, selectedFolder, deleteAppData } =
+  await useGetFolders();
 
 // getFilesByFolder
 const {
