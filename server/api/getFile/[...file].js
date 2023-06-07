@@ -16,8 +16,7 @@ export default defineEventHandler(async (event) => {
     });
 
     const data = new Uint8Array(arrayBuffer);
-
-    // setResponseHeader(event, "Content-Type", "octet/stream");
+    setResponseHeader(event, "Content-Type", "application/octet-stream");
     setResponseHeader(
       event,
       "Content-Disposition",
