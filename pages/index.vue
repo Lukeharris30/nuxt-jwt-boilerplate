@@ -1,6 +1,7 @@
 <script setup>
 import { useGetFolders } from "../composables/useGetFolders";
 import { useUser } from "../stores/user";
+import { useAppStringData } from "~/stores/appStringData";
 definePageMeta({
   middleware: "auth",
 });
@@ -9,11 +10,11 @@ const splitterModel = ref(50);
 
 let selectedFolderTreeItem = ref(null);
 const selectedFolderTreeFolders = ref([]);
+let selectedFolderTreeError = ref(null);
 
 const { deleteUser } = useUser();
-const { mappedRoot, folderRoot, selectedFolder, deleteAppData } =
-  await useGetFolders();
-
+const { mappedRoot, folderRoot, selectedFolder } = await useGetFolders();
+const { deleteAppData } = useAppStringData();
 // getFilesByFolder
 const {
   pending,
@@ -55,12 +56,28 @@ watch(selectedFolder, (newValue) => {
 });
 
 if (selectedFolderError?.value?.statusCode === 401) {
-  console.log("error getting files", selectedFolderError);
+  console.log(
+    "error getting files by Folder",
+    selectedFolderError.value,
+    selectedFolderError?.value?.statusCode
+  );
   deleteUser();
   deleteAppData();
   await navigateTo("/login");
 }
 
+watch(selectedFolderTreeError, async (newValue) => {
+  if (newValue?.statusCode === 401) {
+    console.log(
+      "error getting files by Folder",
+      newValue,
+      newValue?.statusCode
+    );
+    deleteUser();
+    deleteAppData();
+    await navigateTo("/login");
+  }
+});
 const onLazyLoad = function ({ node, key, done, fail }) {
   selectedFolder.value = key;
 
@@ -74,7 +91,10 @@ const onLazyLoad = function ({ node, key, done, fail }) {
 };
 
 const downloadFile = async function () {
+  // check for null
+  if (!selectedFolderTreeItem.value) return;
   console.log("get the file");
+  console.log("selectedFolderTreeItem", selectedFolderTreeItem.value);
   // console.log("downloadFile", selectedFolderTreeItem.value);
   // const response = await $fetch(
   //   `/api/getFile/${selectedFolderTreeItem.value}`,
@@ -84,17 +104,50 @@ const downloadFile = async function () {
   //     },
   //   }
   // );
+  const { data: arrayBuffer, error: fileError } = await useAsyncData(
+    "file",
+    () =>
+      $fetch(`/api/getFile/${selectedFolderTreeItem.value}`, {
+        params: {
+          file: selectedFolderTreeItem.value,
+        },
+        responseType: "blob",
+      })
+    // {
+    //   transform: (file) => {
+    //     return file;
+    //   },
+    // }
+  );
+  if (fileError.value) {
+    console.log("caunt file error", fileError.value);
+    if (fileError.value.statusCode === 401) {
+      console.log("caunt file error 401");
+      deleteUser();
+      deleteAppData();
+      await navigateTo("/login");
+    }
+  }
+  console.log(arrayBuffer.value);
+  // Assume arrayBuffer is the ArrayBuffer object you have
+  // Assume blob is the Blob object you have
+  const url = URL.createObjectURL(arrayBuffer.value);
 
-  // console.log("response", response);
-  // const type = response.type;
-  // console.log(type);
+  // Create a temporary link element
+  const link = document.createElement("a");
+  link.href = url;
 
-  // let blob = new Blob([response], { type });
-  // let url = URL.createObjectURL(blob);
-  // let link = document.createElement("a");
-  // link.href = url;
-  // link.download = selectedFolderTreeItem.value;
-  // link.click();
+  // Specify the name for the downloaded file
+  link.download = "output.pdf"; // Replace 'output.file' with the appropriate file name
+
+  // Append the link to the body
+  document.body.appendChild(link);
+
+  // Trigger the download by simulating a click on the link
+  link.click();
+
+  // Remove the link from the body
+  document.body.removeChild(link);
 };
 </script>
 

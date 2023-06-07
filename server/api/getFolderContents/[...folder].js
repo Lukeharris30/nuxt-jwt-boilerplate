@@ -13,8 +13,12 @@ export default defineEventHandler(async (event) => {
     });
     return response;
   } catch (error) {
-    console.error("Error occurred:", error);
-    return error;
+    console.error("Error occurred: getting folder", error);
+    throw createError({
+      statusCode: 401,
+      statusMessage: "unauthorized",
+    });
+    // return error;
     // throw new Error(error);
   }
 });
