@@ -94,13 +94,15 @@ const downloadFile = async function () {
   // check for null
   if (!selectedFolderTreeItem.value) return;
 
-  const { data: blob, error: fileError } = await useAsyncData("file", () =>
-    $fetch(`/api/getFile/${selectedFolderTreeItem.value}`, {
-      params: {
-        file: selectedFolderTreeItem.value,
-      },
-      responseType: "blob",
-    })
+  const { data: arrayBuffer, error: fileError } = await useAsyncData(
+    "file",
+    () =>
+      $fetch(`/api/getFile/${selectedFolderTreeItem.value}`, {
+        params: {
+          file: selectedFolderTreeItem.value,
+        },
+        responseType: "arrayBuffer",
+      })
   );
   if (fileError.value) {
     console.log("caught file error", fileError.value);
@@ -111,24 +113,38 @@ const downloadFile = async function () {
       await navigateTo("/login");
     }
   } else {
-    // Assume blob is the Blob object you have
-    const url = URL.createObjectURL(blob.value);
+    const blob = new Blob([arrayBuffer.value]);
 
-    // Create a temporary link element
+    const url = URL.createObjectURL(blob);
+
     const link = document.createElement("a");
     link.href = url;
-
-    // Specify the name for the downloaded file
-    link.download = selectedFileObject.value.label; // Replace 'output.file' with the appropriate file name
-
-    // Append the link to the body
+    link.download = selectedFileObject.value.label;
     document.body.appendChild(link);
 
-    // Trigger the download by simulating a click on the link
     link.click();
 
-    // Remove the link from the body
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    // FOR BLOB
+    // // Assume blob is the Blob object you have
+    // const url = URL.createObjectURL(blob.value);
+
+    // // Create a temporary link element
+    // const link = document.createElement("a");
+    // link.href = url;
+
+    // // Specify the name for the downloaded file
+    // link.download = selectedFileObject.value.label; // Replace 'output.file' with the appropriate file name
+
+    // // Append the link to the body
+    // document.body.appendChild(link);
+
+    // // Trigger the download by simulating a click on the link
+    // link.click();
+
+    // // Remove the link from the body
+    // document.body.removeChild(link);
   }
 };
 </script>

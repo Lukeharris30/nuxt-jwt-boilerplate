@@ -15,6 +15,8 @@ export default defineEventHandler(async (event) => {
       responseType: "arrayBuffer",
     });
 
+    const buffer = Buffer.from(arrayBuffer);
+
     const data = new Uint8Array(arrayBuffer);
     setResponseHeader(event, "Content-Type", "application/octet-stream");
     setResponseHeader(
@@ -23,7 +25,7 @@ export default defineEventHandler(async (event) => {
       `attachment; fileName=${file}`
     );
     setResponseHeader(event, "Content-Length", data.length);
-    return data;
+    return buffer;
   } catch (error) {
     console.error("Error occurred: getting file", error);
     throw createError(error);
