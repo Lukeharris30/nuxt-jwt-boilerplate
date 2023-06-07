@@ -10,7 +10,7 @@ const splitterModel = ref(50);
 
 let selectedFolderTreeItem = ref(null);
 const selectedFolderTreeFolders = ref([]);
-let selectedFolderTreeError = ref(null);
+// let selectedFolderTreeError = ref(null);
 
 const { deleteUser } = useUser();
 const { mappedRoot, selectedFolder } = await useGetFolders();
@@ -20,7 +20,7 @@ const { deleteAppData } = useAppStringData();
 const {
   pending,
   data: selectedFolderTree,
-  error: selectedFolderError,
+  error: selectedFolderTreeError,
   refresh,
 } = await useAsyncData(
   "selectedFolderTree",
@@ -56,15 +56,8 @@ watch(selectedFolder, (newValue) => {
   refresh();
 });
 
-if (selectedFolderError?.value?.statusCode === 401) {
-  console.log("error getting files by Folder", selectedFolderError.value);
-  deleteUser();
-  deleteAppData();
-  await navigateTo("/login");
-}
 // watch the error from the folder tree and delete user if it is a 401
 watch(selectedFolderTreeError, async (newValue) => {
-  console.log("error in file watch", newValue);
   if (newValue?.statusCode === 401) {
     console.log(
       "watcher: unauthorized error getting files by Folder, removing user",
