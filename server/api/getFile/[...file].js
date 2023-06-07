@@ -1,7 +1,7 @@
 export default defineEventHandler(async (event) => {
   const jwt = getCookie(event, "token");
   const file = event.context.params.file;
-  const fileName = event.context.params;
+
   event.node.req.headers = {};
   event.node.req.headers["Authorization"] = `Bearer ${jwt}`;
   event.node.req.headers["client_id"] = useRuntimeConfig().mulesoftClientId;
@@ -17,6 +17,13 @@ export default defineEventHandler(async (event) => {
 
     const data = new Uint8Array(arrayBuffer);
 
+    // setResponseHeader(event, "Content-Type", "octet/stream");
+    setResponseHeader(
+      event,
+      "Content-Disposition",
+      `attachment; fileName=${file}`
+    );
+    setResponseHeader(event, "Content-Length", data.length);
     return data;
   } catch (error) {
     console.error("Error occurred: getting file", error);
