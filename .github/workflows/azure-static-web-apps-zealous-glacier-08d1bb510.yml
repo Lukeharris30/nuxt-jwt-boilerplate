@@ -4,7 +4,7 @@ on:
   push:
     branches:
       - main
-      - stage
+      # - stage
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
@@ -38,7 +38,6 @@ jobs:
           NUXT_MICROSOFT_CLIENT_ID: ${{ secrets.NUXT_MICROSOFT_CLIENT_ID}}
           NUXT_MULESOFT_CLIENT_ID: ${{ secrets.NUXT_MULESOFT_CLIENT_ID}}
           NUXT_MULESOFT_CLIENT_SECRET: ${{ secrets.NUXT_MULESOFT_CLIENT_SECRET}}
-          FUNCTIONS_WORKER_RUNTIME: node
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
     runs-on: ubuntu-latest
