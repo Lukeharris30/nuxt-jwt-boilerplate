@@ -113,8 +113,10 @@ const downloadFile = async function () {
       await navigateTo("/login");
     }
   } else {
+    // this is a different value than the one in the file
     console.log("download file", arrayBuffer.value);
     // convert the unit8array to a blob
+
     const blob = new Blob([arrayBuffer.value]);
 
     const url = URL.createObjectURL(blob);
